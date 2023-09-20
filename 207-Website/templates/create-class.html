@@ -1,0 +1,166 @@
+<!doctype html>
+<html>
+
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css"
+        integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <!-- font awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.css" />
+
+    <title>Teach World Wide</title>
+    <link rel="stylesheet" type="text/css" href="./static/style/global.css" />
+    <link rel="icon" href="./static/img/icon.png" />
+</head>
+
+<body>
+    <!-- navbar -->
+    <navbar class="navbar navbar-expand-lg navbar-dark shadow-sm fixed-top bg-green">
+        <div class="container">
+            <!-- Logo + App Name -->
+            <a class="navbar-brand d-flex align-items-center ml-0 ml-lg-5" href="./index.html">
+                <img src="./static/img/icon.png" width="45" height="45" class="d-inline-block align-top" alt="">
+                <span class="ml-3 font-weight-bolder" style="color: #fff;">Teach World Wide</span>
+            </a>
+            <!-- Toggler Button -->
+            <button class="navbar-toggler border-0" type="button" data-toggle="collapse" data-target="#navbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Collapsible Content -->
+            <div class="collapse navbar-collapse justify-content-center" id="navbar">
+                <!-- Search Bar -->
+                <form class="form-inline md-form mt-3 mt-lg-0 ">
+                    <div class="input-group">
+                        <input class="form-control font-bold" ype="text" placeholder="Search" aria-label="Search">
+                        <div class="input-group-append">
+                            <i class="fa fa-search input-group-text pt-2" aria-hidden="true"></i>
+                        </div>
+                    </div>
+                </form>
+
+                <ul class="navbar-nav mt-3 mt-lg-0 pl-lg-4">
+                    <li class="nav-item">
+                        <a class="nav-link" href="./create-class.html">
+                            <i class="fa fa-plus"></i>
+                            Create Class
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown01" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-search"></i> Find Class
+                        </a>
+                        <div class="dropdown-menu shadow-sm" aria-labelledby="dropdown01">
+                            <a class="dropdown-item" href="./index.html#search">All</a>
+                            <a class="dropdown-item" href="./index.html#search">Recorded</a>
+                            <a class="dropdown-item" href="./index.html#search">Video</a>
+                            <a class="dropdown-item" href="./index.html#search">Workshop</a>
+                            <a class="dropdown-item" href="./index.html#search">Lecture</a>
+                        </div>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="dropdown02" data-toggle="dropdown"
+                            aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-user"></i>
+                            <span class="ml-2">Username</span>
+                        </a>
+                        <div class="dropdown-menu shadow-sm" aria-labelledby="dropdown02">
+                            <a class="dropdown-item" href="#">Profile</a>
+                            <a class="dropdown-item" href="#">Settings</a>
+                            <a class="dropdown-item" href="./user-bookings.html">Bookings</a>
+                            <a class="dropdown-item" href="#">Help</a>
+                            <a class="dropdown-item" href="#">Sign Out</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </navbar>
+
+    <!-- create class -->
+    <div class="centered-content my-5 py-5">
+        <div class="col text-center text-white">
+            <h1>Create a New Class</h1>
+            <div class="row justify-content-center">
+                <!-- options -->
+                <div class="create-class-form bg-green text-white mx-3  mt-3 ">
+                    <form>
+                        <div class="form-group">
+                            <label for="className">Class Name:</label>
+                            <input type="text" class="form-control" id="className" placeholder="Enter class name">
+                        </div>
+                        <div class="form-group">
+                            <label for="classDuration">Duration (minutes):</label>
+                            <input type="number" class="form-control" id="classDuration" placeholder="Enter duration">
+                        </div>
+                        <div class="form-group">
+                            <label for="classCost">Cost:</label>
+                            <input type="range" class="form-control-range" id="classCost" min="0" max="100" value="0">
+                            <p>Cost: <span id="costValue">$0</span></p>
+                        </div>
+                        <div class="form-group">
+                            <label for="classType">Class Type:</label>
+                            <select class="form-control" id="classType">
+                                <option value="live">Live</option>
+                                <option value="recorded">Recorded</option>
+                                <option value="workshop">Workshop</option>
+                                <option value="lecture">Lecture</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="classTimeOfDay">Time of Day:</label>
+                            <input type="time" class="form-control" id="classTimeOfDay">
+                        </div>
+                    </form>
+                </div>
+                <!-- description -->
+                <div class="create-class-form bg-green text-white mx-3 big-box text-left  mt-3 ">
+                    <div class="form-group">
+                        <label for="description">Description:</label>
+                        <textarea class="form-control" id="description" rows="15" placeholder="Enter description">With our thorough online course, you may embark on an exciting adventure into the world of photography. This course, designed for both beginners and experts, will teach you the art and science of generating spectacular visual narratives. You'll learn the foundations of composition, lighting, and camera settings from seasoned photographers.
+
+Course Highlights:
+- Recognising camera types and settings
+- Investigating composition and framing methods
+- Understanding natural and artificial lighting
+- Navigating multiple photography genres
+- Post-processing and picture editing basics
+- Creating a personal photographic style
+- Practical exercises and peer reviews
+- Creating a compelling image portfolio</textarea>
+                    </div>
+                </div>
+                <!-- image -->
+                <div class="create-class-form bg-green text-white mt-3 ">
+                    <label for="image">Thumbnail</label>
+                    <img src="./static/img/photography.jpeg" alt="Image" class="img-fluid">
+                    <button type="submit" class="btn btn-dark mt-3">Change Image</button>
+                </div>
+            </div>
+            <div class="mt-3">
+                <button type="submit" class="btn btn-dark w-15 pt-3"><h4>Create Class</h4></button>
+            </div>
+        </div>
+
+
+    </div>
+
+    <!-- scripts -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
+        integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js"
+        integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
+        crossorigin="anonymous"></script>
+</body>
+
+</html>
