@@ -62,7 +62,6 @@ db.sqlite3
 db.sqlite3-journal
 
 # Flask stuff:
-instance/
 .webassets-cache
 
 # Scrapy stuff:
@@ -155,8 +154,6 @@ cython_debug/
 
 *.pyc
 __pycache__/
-
-instance/
 
 .pytest_cache/
 .coverage
