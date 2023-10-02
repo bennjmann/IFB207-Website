@@ -33,7 +33,7 @@ def create():
     flash('Successfully created new travel destination', 'success')
     #Always end with redirect when form is valid
     return redirect(url_for('destination.create'))
-  return render_template('destinations/create.html', form=form)
+  return render_template('destinations/create-class.html', form=form)
 
 def check_upload_file(form):
   #get file data from form  

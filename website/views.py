@@ -9,12 +9,19 @@ def index():
     destinations = db.session.scalars(db.select(Destination)).all()    
     return render_template('index.html', destinations=destinations)
 
+
+@mainbp.route('/bookings')
+def booking():
+    return render_template('user-bookings.html')
+
+
+
 @mainbp.route('/search')
 def search():
     if request.args['search'] and request.args['search'] != "":
         print(request.args['search'])
         query = "%" + request.args['search'] + "%"
-        destinations = db.session.scalars(db.select(Destination)).where(Destination.description.like(query))
-        return render_template('index.html', destinations=destinations)
+        #destinations = db.session.scalars(db.select(Destination)).where(Destination.description.like(query))
+        return render_template('index.html', ) #destinations=destinations
     else:
         return redirect(url_for('main.index'))

@@ -56,7 +56,7 @@ def login():
             return redirect(url_for('main.index'))
         else:
             flash(error)
-    return render_template('user.html', form=login_form, heading='Login')
+    return render_template('user-bookings.html', form=login_form, heading='Login')
 
 @authbp.route('/logout')
 @login_required
