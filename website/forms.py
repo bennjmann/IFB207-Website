@@ -1,40 +1,53 @@
 from flask_wtf import FlaskForm
-from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField
+from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField, DateField, TimeField, IntegerField, SelectField
 from wtforms.validators import InputRequired, Email, EqualTo
 from flask_wtf.file import FileRequired, FileField, FileAllowed
 
 ALLOWED_FILE = {'PNG', 'JPG', 'png', 'jpg'}
 
-#Create new destination
-class DestinationForm(FlaskForm):
-  name = StringField('Country', validators=[InputRequired()])
-  description = TextAreaField('Description', 
-            validators=[InputRequired()])
-  image = FileField('Destination Image', validators=[
-    FileRequired(message='Image cannot be empty'),
-    FileAllowed(ALLOWED_FILE, message='Only supports PNG, JPG, png, jpg')])
-  currency = StringField('Currency', validators=[InputRequired()])
-  submit = SubmitField("Create")
-    
-#User login
+
+# User login
 class LoginForm(FlaskForm):
-    user_name = StringField("User Name", validators=[InputRequired('Enter user name')])
-    password = PasswordField("Password", validators=[InputRequired('Enter user password')])
+    user_name = StringField("User Name", validators=[
+                            InputRequired('Enter user name')])
+    password = PasswordField("Password", validators=[
+                             InputRequired('Enter user password')])
     submit = SubmitField("Login")
 
-#User register
+# User register
 class RegisterForm(FlaskForm):
     user_name = StringField("User Name", validators=[InputRequired()])
-    email_id = StringField("Email Address", validators=[Email("Please enter a valid email")])
-    
-    #linking two fields - password should be equal to data entered in confirm
+    email_id = StringField("Email Address", validators=[
+                           Email("Please enter a valid email")])
+
+    # linking two fields - password should be equal to data entered in confirm
     password = PasswordField("Password", validators=[InputRequired(),
-                  EqualTo('confirm', message="Passwords should match")])
+                                                     EqualTo('confirm', message="Passwords should match")])
     confirm = PasswordField("Confirm Password")
-    #submit button
+    # submit button
     submit = SubmitField("Register")
 
-#User comment
+# User comment
 class CommentForm(FlaskForm):
-  text = TextAreaField('Comment', [InputRequired()])
-  submit = SubmitField('Create')
+    text = TextAreaField('Comment', [InputRequired()])
+    submit = SubmitField('Create')
+
+# Create Event
+class EventForm(FlaskForm):
+    name = StringField('Event Title', validators=[InputRequired()])
+    status = SelectField('Status', choices=[("Open"), ("Closed")], validators=[InputRequired()])
+    type = SelectField('Genres', choices=[("Live"), ("Recorded"), ("Workshop"), ("Lecture")], validators=[InputRequired()])
+    date = DateField('Date', format='%Y-%m-%d', validators=[InputRequired()])
+    time = TimeField('Start Time', validators=[InputRequired()])
+    duration = StringField('Duration', validators=[InputRequired()])
+    description = TextAreaField('Description', validators=[InputRequired()])
+    image = FileField('Event Image', validators=[FileRequired(message='Image Required'), FileAllowed(ALLOWED_FILE, message='Only supports PNG, JPG, png, jpg')])
+    ticket_cost = IntegerField('Cost Of Ticket', validators=[InputRequired()])
+    total_tickets = IntegerField('Total Number Of Tickets', validators=[InputRequired()])
+    
+    submit = SubmitField("Create")
+
+# Book Event
+class BookingForm(FlaskForm):
+    quantity = IntegerField('Number Of Tickets', validators=[InputRequired()])
+    submit = SubmitField('Book')

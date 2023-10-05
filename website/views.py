@@ -15,7 +15,6 @@ def booking():
     return render_template('user-bookings.html')
 
 
-
 @mainbp.route('/search')
 def search():
     if request.args['search'] and request.args['search'] != "":
