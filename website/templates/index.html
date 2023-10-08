@@ -5,8 +5,7 @@
 <html>
 
 <body>
-
-{% block header %}
+{% block content %}
     <!-- landing page -->
     <div class="container centered-content my-5">
         <div class="row mt-5 mt-lg-0">
@@ -28,9 +27,7 @@
             </div>
         </div>
     </div>
-{% endblock %}
 
-{% block content %}
     <!-- search + details -->
     <div class="centered-content" id="search">
         <div class="row mx-5 p-5 text-white justify-content-center">
@@ -83,66 +80,31 @@
                 <div class="col py-3 mx-3 mt-3 mt-lg-0 bg-green rounded">
                     <div class="col text-center">
                         <h2>Search</h2>
-                        <div class="col mt-0 pt-3 mt-lg-3">
-                            <button type="button" class="btn btn-dark w-15 active">Photography</button>
+                        {% for destination in destinations %}
+                        	<div class="col mt-0 pt-3 mt-lg-3">
+                            <a href="{{ url_for('main.selected', id=destination.id, _anchor='search') }}" class="btn btn-dark w-15 active">{{ destination.name }}</a>
                         </div>
-                        <div class="col mt-3">
-                            <button type="button" class="btn btn-dark w-15">Story Telling</button>
-                        </div>
-                        <div class="col mt-3">
-                            <button type="button" class="btn btn-dark w-15">Digital Marketing</button>
-                        </div>
-                        <div class="col mt-3">
-                            <button type="button" class="btn btn-dark w-15">Language Learning</button>
-                        </div>
-                        <div class="col mt-3">
-                            <button type="button" class="btn btn-dark w-15">Graphic Design</button>
-                        </div>
-                        <div class="col mt-3">
-                            <button type="button" class="btn btn-dark w-15">Web Development</button>
-                        </div>
-                        <div class="col mt-3">
-                            <button type="button" class="btn btn-dark w-15">Cooking Techniques</button>
-                        </div>
-                        <div class="col mt-3">
-                            <button type="button" class="btn btn-dark w-15">Financial Literacy</button>
-                        </div>
-                        <div class="col mt-3">
-                            <button type="button" class="btn btn-dark w-15">Song Writing</button>
-                        </div>
-                        <div class="col mt-3">
-                            <button type="button" class="btn btn-dark w-15">Strenght Training</button>
-                        </div>
-                        <div class="col mt-3">
-                            <button type="button" class="btn btn-dark w-15">Communication Skills</button>
-                        </div>
-                        <div class="col mt-3">
-                            <button type="button" class="btn btn-dark w-15">Gardening</button>
-                        </div>
-
+                        {% endfor %}
                     </div>
                 </div>
             </div>
             <!-- details -->
-            <div class="col py-3 mx-4 mt-3 mt-lg-0 bg-green rounded big-box">
+        {% if  selected_destination %}
+        <div class="col py-3 mx-4 mt-3 mt-lg-0 bg-green rounded big-box">
                 <div class="col text-center">
                     <h2>Details</h2>
                     <div class="col mt-0 pt-3 mt-lg-3">
                         <!-- Course Details -->
                         <div class="col mx-2 text-left">
                             <div class="card-body bg-dark rounded">
-                                <h4>Course: Photography</h4>
+                                <h4>Course: {{ selected_destination.name }}</h4>
                                 <p><strong>Status:</strong> Open</p>
                                 <p><strong>Duration:</strong> 60 minutes</p>
                                 <p><strong>Type:</strong> Live</p>
                                 <p><strong>Created:</strong> 17/08/2023</p>
                                 <p><strong>Cost:</strong> Free</p>
 
-                                <p>With our thorough online course, you may embark on an exciting adventure into the
-                                    world of photography. This course, designed for both beginners and experts, will
-                                    teach you the art and science of generating spectacular visual narratives.
-                                    You'll learn the foundations of composition, lighting, and camera settings from
-                                    seasoned photographers.</p>
+                                <p>{{ selected_destination.description }}</p>
 
                                 <p><strong>Course Highlights:</strong></p>
                                 <ul>
@@ -161,12 +123,13 @@
                         </div>
                         <!-- Buttons -->
                         <div class="row mx-4">
-                            <button class="btn btn-dark mt-4"><a href="{{ url_for('destination.show', id=1) }}" class="text-decoration-none">More Info</a></button>
+                            <button class="btn btn-dark mt-4"><a href="{{ url_for('destination.show', id=selected_destination.id) }}" class="text-decoration-none">More Info</a></button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    {% endif %}
     </div>
 {% endblock %}
 </body>
