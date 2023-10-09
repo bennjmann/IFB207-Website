@@ -34,7 +34,7 @@
             <div class="row">
                 <!-- filter -->
                 <div class="col w-15 py-3 mx-3 mt-3 mt-lg-0 bg-green rounded">
-                    <div class="col text-center">
+                    <form class="col text-center">
                         <h2>Filter</h2>
                         <!-- Date Filter -->
                         <div class="col mt-0 pt-3 mt-lg-3">
@@ -74,12 +74,17 @@
                             <input type="range" id="costFilter" class="custom-range" min="0" max="100" step="1">
                             <p>Value: $<span id="costValue">0</span></p>
                         </div>
-                    </div>
+                    </form>
                 </div>
                 <!-- search -->
                 <div class="col py-3 mx-3 mt-3 mt-lg-0 bg-green rounded">
                     <div class="col text-center">
                         <h2>Search</h2>
+                        {% if destinations|length <= 0 %}
+                            No class Found
+                        {% endif %}
+
+
                         {% for destination in destinations %}
                         	<div class="col mt-0 pt-3 mt-lg-3">
                             <a href="{{ url_for('main.selected', id=destination.id, _anchor='search') }}" class="btn btn-dark w-15 active">{{ destination.name }}</a>
