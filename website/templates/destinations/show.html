@@ -1,13 +1,15 @@
 {% extends 'base.html' %}
 
-
 <!doctype html>
-<html>
-
+<html lang="en">
+<head>
+    {% block head %}
+    <link rel="stylesheet" type="text/css" href="../../static/style/global.css" />
+    <link rel="icon" href="../../static/img/icon.png" />
+    {% endblock %}
+</head>
 <body>
-
-
-{% block header %}
+{% block content %}
     <!-- more detailed -->
     <div class="centered-content my-5 py-4" id="search">
         <div class="col text-center text-white">
@@ -55,11 +57,9 @@
                                 </div>
                                 <!-- Image -->
                                 <div class="mx-2 mt-3 mt-lg-0">
-                                    <img src="./static/img/photography.jpeg" alt="Image" class="img-fluid">
+                                    <img src="../../static/img/photography.jpeg" alt="Image" class="img-fluid">
                                 </div>
                             </div>
-{% endblock %}
-{% block content %}
                             <!-- Buttons -->
                             <div class="row mx-2">
                                 <button class="btn btn-dark mt-4 mr-2">Book Session</button>
@@ -69,9 +69,11 @@
                             <div class="col text-left mt-4">
                                 <div class="">
                                     <h2>Comments</h2>
+                                    {% for comment in destination.comments %}
                                     <div class="comment rounded">
                                         <i class="fa fa-user"></i>
-                                        <strong>User 1:</strong> Great course! I learnt a lot.
+                                        <strong>{{ comment.user.name }}:</strong>
+                                        {{ comment.text }}
                                         <div class="mt-2">
                                             <button class="btn btn-success mr-2">
                                                 <i class="fa fa-thumbs-up"></i> Like
@@ -81,30 +83,7 @@
                                             </button>
                                         </div>
                                     </div>
-                                    <div class="comment rounded">
-                                        <i class="fa fa-user"></i>
-                                        <strong>User 2:</strong> Very informative, would recomend. Pluss the lecturer is supper easy to understand.
-                                        <div class="mt-2">
-                                            <button class="btn btn-success mr-2">
-                                                <i class="fa fa-thumbs-up"></i> Like
-                                            </button>
-                                            <button class="btn btn-danger">
-                                                <i class="fa fa-thumbs-down"></i> Dislike
-                                            </button>
-                                        </div>
-                                    </div>
-                                    <div class="comment rounded">
-                                        <i class="fa fa-user"></i>
-                                        <strong>User 3:</strong> Bad. Not recomended.
-                                        <div class="mt-2">
-                                            <button class="btn btn-success mr-2">
-                                                <i class="fa fa-thumbs-up"></i> Like
-                                            </button>
-                                            <button class="btn btn-danger">
-                                                <i class="fa fa-thumbs-down"></i> Dislike
-                                            </button>
-                                        </div>
-                                    </div>
+                                    {% endfor %}
                                 </div>
                             </div>
                         </div>

@@ -1,7 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, flash
 from .forms import LoginForm, RegisterForm
 #new imports:
-from flask_login import login_user, login_required, logout_user
+from flask_login import login_user, login_required, logout_user, current_user
 from flask_bcrypt import generate_password_hash, check_password_hash
 from .models import User
 from . import db
@@ -9,8 +9,9 @@ from . import db
 #create a blueprint
 authbp = Blueprint('auth', __name__ )
 
-@authbp.route('/register', methods=['GET', 'POST'])
-def register():
+
+@authbp.route('/user', methods=['GET', 'POST'])
+def user():
     register = RegisterForm()
     #the validation of form is fine, HTTP request is POST
     if (register.validate_on_submit()==True):
@@ -33,7 +34,15 @@ def register():
             return redirect(url_for('main.index'))
     #the else is called when the HTTP request calling this page is a GET
     else:
-        return render_template('user.html', form=register, heading='Register')
+        return render_template('user.html')
+
+
+
+
+@authbp.route('/register', methods=['GET', 'POST'])
+@login_required
+def register():
+        return render_template('user.html', user=current_user)
 
 @authbp.route('/login', methods=['GET', 'POST'])
 def login():
@@ -56,7 +65,7 @@ def login():
             return redirect(url_for('main.index'))
         else:
             flash(error)
-    return render_template('user-bookings.html', form=login_form, heading='Login')
+    return render_template('user.html', form=login_form, heading='Login')
 
 @authbp.route('/logout')
 @login_required
