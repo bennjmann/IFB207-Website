@@ -16,7 +16,6 @@ from flask_login import login_required, current_user
 
 destbp = Blueprint('destination', __name__, url_prefix='/destinations')
 
-
 @destbp.route('/<id>')
 def show(id):
     destination = db.session.scalar(
@@ -25,7 +24,6 @@ def show(id):
     form = CommentForm()
     return render_template('destinations/show.html', destination=destination, form=form)
 
-
 @destbp.route('/user-bookings')
 @login_required
 def bookings():
@@ -33,7 +31,6 @@ def bookings():
     events = Event.query.all()
     commentForm = CommentForm()
     return render_template('destinations/user-bookings.html', bookings=bookings, event=events, form=commentForm)
-
 
 @destbp.route('/create-events', methods=['GET', 'POST'])
 @login_required
@@ -61,7 +58,6 @@ def create():
         db.session.commit()
         return redirect(url_for('event.create-event'))
     return render_template('destinations/create-event.html', form=eventForm)
-
 
 @destbp.route('/events', methods=['GET', 'POST'])
 @login_required

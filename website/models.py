@@ -3,29 +3,16 @@ from datetime import datetime
 from flask_login import UserMixin
 
 class User(db.Model, UserMixin):
-    __tablename__ = 'users' # good practice to specify table name
+    __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), index=True, unique=True, nullable=False)
     email_id = db.Column(db.String(100), index=True, nullable=False)
-	#password is never stored in the DB, an encrypted password is stored
-	# the storage should be at least 255 chars long
+
     password_hash = db.Column(db.String(255), nullable=False)
 
     comments = db.relationship('Comment', backref='user')
     event = db.relationship('Event', backref='user')
     bookings = db.relationship('Booking', backref='user')
-
-class Comment(db.Model):
-    __tablename__ = 'comments'
-    id = db.Column(db.Integer, primary_key=True)
-    text = db.Column(db.String(400))
-    created_at = db.Column(db.DateTime, default=datetime.now())
-
-    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    event_id = db.Column(db.Integer, db.ForeignKey('events.event_id'))
-
-    def __repr__(self):
-        return "<Comment: {}>".format(self.text)
     
 class Event(db.Model):
     __tablename__ = 'events'
@@ -50,6 +37,18 @@ class Event(db.Model):
     def __repr__(self):
         return "Name: {}".format(self.event_name)
     
+class Comment(db.Model):
+    __tablename__ = 'comments'
+    id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(400))
+    created_at = db.Column(db.DateTime, default=datetime.now())
+
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    event_id = db.Column(db.Integer, db.ForeignKey('events.id'))
+
+    def __repr__(self):
+        return "<Comment: {}>".format(self.text)
+
 class Booking(db.Model):    
     __tablename__ = 'bookings'
     id = db.Column(db.Integer, primary_key=True)

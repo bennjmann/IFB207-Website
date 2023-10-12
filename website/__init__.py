@@ -8,55 +8,63 @@ import datetime
 db = SQLAlchemy()
 app = Flask(__name__)
 
+
 def create_app():
-    
-    #we use this utility module to display forms quickly
+    # we use this utility module to display forms quickly
     bootstrap = Bootstrap5(app)
 
-    #this is a much safer way to store passwords
+    # this is a much safer way to store passwords
     bcrypt = Bcrypt(app)
 
-    #a secret key for the session object
-    #(it would be better to use an environment variable here)
-    app.secret_key = 'somerandomvalue'
+    # a secret key for the session object
+    # (it would be better to use an environment variable here)
+    app.secret_key = "somerandomvalue"
 
-    #Configue and initialise DB
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite'
+    # Configue and initialise DB
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///db.sqlite"
     db.init_app(app)
 
-    #config upload folder
-    UPLOAD_FOLDER = '/static/image'
-    app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER 
-    
-    #initialise the login manager
+    # config upload folder
+    UPLOAD_FOLDER = "/static/image"
+    app.config["UPLOAD_FOLDER"] = UPLOAD_FOLDER
+
+    # initialise the login manager
     login_manager = LoginManager()
-    login_manager.login_view = 'auth.login'
+    login_manager.login_view = "auth.login"
     login_manager.init_app(app)
 
-    #create a user loader function takes userid and returns User
+    # create a user loader function takes userid and returns User
     from .models import User  # importing here to avoid circular references
+
     @login_manager.user_loader
     def load_user(user_id):
         return User.query.get(int(user_id))
 
-    #add Blueprints
+    # add Blueprints
     from . import views
+
     app.register_blueprint(views.mainbp)
-    from . import destinations
-    app.register_blueprint(destinations.destbp)
+    from . import events
+
+    app.register_blueprint(events.destbp)
     from . import auth
+
     app.register_blueprint(auth.authbp)
 
+    with app.app_context():
+        db.create_all()
     return app
 
-@app.errorhandler(404) 
-# inbuilt function which takes error as parameter 
-def not_found(e): 
-  return render_template("404.html", error=e)
 
-#this creates a dictionary of variables that are available
-#to all html templates
+@app.errorhandler(404)
+# inbuilt function which takes error as parameter
+def not_found(e):
+    return render_template("404.html", error=e)
+
+
+# this creates a dictionary of variables that are available
+# to all html templates
 @app.context_processor
 def get_context():
-   year = datetime.datetime.today().year
-   return dict(year=year)
+    year = datetime.datetime.today().year
+    return dict(year=year)
