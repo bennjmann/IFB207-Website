@@ -1,13 +1,13 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from .models import Destination, Comment
-from .forms import DestinationForm, CommentForm
+from .models import Event, Comment
+from .forms import EventForm, CommentForm
 from . import db
 import os
 from werkzeug.utils import secure_filename
 from flask_login import login_required, current_user
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from .models import Comment, Event, Booking
-from .forms import CommentForm, EventForm, UpdateForm, BookingForm
+from .forms import CommentForm, EventForm, BookingForm
 from . import db, app
 import os
 from werkzeug.utils import secure_filename
@@ -20,7 +20,7 @@ destbp = Blueprint('destination', __name__, url_prefix='/destinations')
 @destbp.route('/<id>')
 def show(id):
     destination = db.session.scalar(
-        db.select(Destination).where(Destination.id == id))
+        db.select(Event).where(Event.id == id))
     # create the comment form
     form = CommentForm()
     return render_template('destinations/show.html', destination=destination, form=form)
@@ -111,7 +111,7 @@ def check_upload_file(form):
 def comment(destination):
     form = CommentForm()
     # get the destination object associated to the page and the comment
-    destination = db.session.scalar(db.select(Destination).where(Destination.id == destination))
+    destination = db.session.scalar(db.select(Event).where(Event.id == destination))
     if form.validate_on_submit():
         # read the comment from the form
         comment = Comment(text=form.text.data, 
