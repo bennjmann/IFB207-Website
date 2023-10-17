@@ -9,8 +9,13 @@ from . import db
 #create a blueprint
 authbp = Blueprint('auth', __name__ )
 
-
 @authbp.route('/user', methods=['GET', 'POST'])
+@login_required
+def register():
+        return render_template('user.html', user=current_user)
+
+
+@authbp.route('/register', methods=['GET', 'POST'])
 def user():
     register = RegisterForm()
     #the validation of form is fine, HTTP request is POST
@@ -34,15 +39,10 @@ def user():
             return redirect(url_for('main.index'))
     #the else is called when the HTTP request calling this page is a GET
     else:
-        return render_template('user.html')
+        return render_template('user.html', form=register, heading='Register')
 
 
 
-
-@authbp.route('/register', methods=['GET', 'POST'])
-@login_required
-def register():
-        return render_template('user.html', user=current_user)
 
 @authbp.route('/login', methods=['GET', 'POST'])
 def login():
