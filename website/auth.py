@@ -11,12 +11,12 @@ authbp = Blueprint('auth', __name__ )
 
 @authbp.route('/user', methods=['GET', 'POST'])
 @login_required
-def register():
+def user():
         return render_template('user.html', user=current_user)
 
 
 @authbp.route('/register', methods=['GET', 'POST'])
-def user():
+def register():
     register = RegisterForm()
     #the validation of form is fine, HTTP request is POST
     if (register.validate_on_submit()==True):
