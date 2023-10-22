@@ -61,6 +61,11 @@ def create_app():
 def not_found(e):
     return render_template("404.html", error=e)
 
+@app.errorhandler(500)
+def internal_server_error(e):
+    # note that we set the 500 status explicitly
+    return render_template('500.html'), 500
+
 
 # this creates a dictionary of variables that are available
 # to all html templates
