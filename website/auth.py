@@ -62,7 +62,7 @@ def login():
         if error is None:
             #all good, set the login_user of flask_login to manage the user
             login_user(user)
-            return redirect(url_for('main.index'))
+            return redirect(url_for('main.booking'))
         else:
             flash(error)
     return render_template('user.html', form=login_form, heading='Login')

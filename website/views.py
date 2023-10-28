@@ -18,7 +18,7 @@ def selected(id):
 
 @mainbp.route('/bookings')
 def booking():
-    return render_template('user-bookings.html')
+    return render_template('bookings.html')
 
 
 @mainbp.route('/search')
