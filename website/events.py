@@ -18,11 +18,12 @@ destbp = Blueprint('destination', __name__, url_prefix='/destinations')
 
 @destbp.route('/<id>')
 def show(id):
-    destination = db.session.scalar(
+    event = db.session.scalar(
         db.select(Event).where(Event.id == id))
     # create the comment form
     form = CommentForm()
-    return render_template('destinations/show.html', destination=destination, form=form)
+    form2 = BookingForm()
+    return render_template('destinations/show.html', event=event, form=form, form2=form2)
 
 @destbp.route('/user-bookings')
 @login_required
@@ -65,27 +66,28 @@ def events():
     events = Event.query.all()
     return render_template('destinations/events.html', event=events)
 
-@destbp.route('/book/<id>', methods=['GET', 'POST'])
+@destbp.route('/book/<current_id>', methods=['GET', 'POST'])
 @login_required
-def book(id):
-    event = Event.query.filter_by(event_id=id).first()
+def book(current_id):
+    event = Event.query.filter_by(id=current_id).first()
     tickets = Booking.query.count()
     bookingForm = BookingForm()
     if bookingForm.validate_on_submit():
         if int(bookingForm.quantity.data) > event.total_tickets:
             flash('Number of tickets exceeds available tickets', 'danger')
-            return redirect(url_for('event.book', id=event.event_id))
+            return redirect(url_for('event.book', id=event.id))
         else:
             booking = Booking(quantity=bookingForm.quantity.data,
                               user_id=current_user.id,
-                              event_id=event.event_id,
+                              event_id=event.id,
                               price=event.ticket_cost * int(bookingForm.quantity.data),
                               purchase_at=datetime.now())
             db.session.add(booking)
             db.session.commit()
             flash('Booking has been confirmed', 'success')
-            return redirect(url_for('event.bookings'))
-    return render_template('destinations/bookings.html', event=event, form=bookingForm, tickets=tickets)
+            return redirect(url_for('destination.show', id=current_id))
+    #return render_template('bookings.html', event=event, form=bookingForm, tickets=tickets)
+
 
 def check_upload_file(form):
     # get file data from form
@@ -104,15 +106,17 @@ def check_upload_file(form):
 
 @destbp.route('/<event>/comment', methods=['GET', 'POST'])
 @login_required
-def comment(destination):
+def comment(event):
     form = CommentForm()
     # get the destination object associated to the page and the comment
-    destination = db.session.scalar(db.select(Event).where(Event.id == destination))
+    event = db.session.scalar(db.select(Event).where(Event.id == event))
     if form.validate_on_submit():
         # read the comment from the form
-        comment = Comment(text=form.text.data, 
-                          destination=destination,
-                          user=current_user)
+        comment = Comment(
+            text=form.text.data,
+            user_id=current_user.id,
+            event_id=event.id,
+        )
         # here the back-referencing works - comment.destination is set
         # and the link is created
         db.session.add(comment)
@@ -122,4 +126,4 @@ def comment(destination):
         flash('Your comment has been added', 'success')
         # print('Your comment has been added', 'success')
     # using redirect sends a GET request to destination.show
-    return redirect(url_for('event.show', id=destination.id))
+    return redirect(url_for('destination.show', id=event.id))

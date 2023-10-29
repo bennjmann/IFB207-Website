@@ -24,8 +24,6 @@ class Event(db.Model):
     status = db.Column(db.String(20))
     type = db.Column(db.String(80))
 
-    date = db.Column(db.Date)
-    time = db.Column(db.Time)
     duration = db.Column(db.String(50))
     
     ticket_cost = db.Column(db.Integer)
@@ -41,7 +39,7 @@ class Comment(db.Model):
     __tablename__ = 'comments'
     id = db.Column(db.Integer, primary_key=True)
     text = db.Column(db.String(400))
-    created_at = db.Column(db.DateTime, default=datetime.now())
+
 
     user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     event_id = db.Column(db.Integer, db.ForeignKey('events.id'))

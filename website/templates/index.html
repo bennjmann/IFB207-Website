@@ -103,27 +103,15 @@
                         <div class="col mx-2 text-left">
                             <div class="card-body bg-dark rounded">
                                 <h4>Course: {{ selected_destination.name }}</h4>
-                                <p><strong>Status:</strong> Open</p>
-                                <p><strong>Duration:</strong> 60 minutes</p>
-                                <p><strong>Type:</strong> Live</p>
-                                <p><strong>Created:</strong> 17/08/2023</p>
-                                <p><strong>Cost:</strong> Free</p>
+                                <p><strong>Status:</strong> {{ selected_destination.status }}</p>
+                                <p><strong>Duration:</strong> {{ selected_destination.duration }}</p>
+                                <p><strong>Type:</strong> {{ selected_destination.type }}</p>
+                                <p><strong>Created:</strong> {{ selected_destination.date }}</p>
+                                <p><strong>Cost:</strong> {{ selected_destination.ticket_cost }}</p>
 
                                 <p>{{ selected_destination.description }}</p>
 
-                                <p><strong>Course Highlights:</strong></p>
-                                <ul>
-                                    <li>Recognising camera types and settings</li>
-                                    <li>Investigating composition and framing methods</li>
-                                    <li>Understanding natural and artificial lighting</li>
-                                    <li>Navigating multiple photography genres</li>
-                                    <li>Post-processing and picture editing basics</li>
-                                    <li>Creating a personal photographic style</li>
-                                    <li>Practical exercises and peer reviews</li>
-                                    <li>Creating a compelling image portfolio</li>
-                                </ul>
-
-                                <p><strong>Time:</strong> Wednesday 1-3pm</p>
+                                <p><strong>Time:</strong> {{ selected_destination.time}}</p>
                             </div>
                         </div>
                         <!-- Buttons -->
