@@ -73,96 +73,19 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <!-- Photography -->
-                                    <tr>
-                                        <td>Photography</td>
-                                        <td><img src="./static/img/photography.jpeg" height="50" alt="Event Image"
-                                                class="max-w-100px">
-                                        </td>
-                                        <td>2166</td>
-                                        <td>2023-09-20 14:30:00</td>
-                                    </tr>
-                                    <!-- Story Telling	 -->
-                                    <tr>
-                                        <td>Story Telling</td>
-                                        <td><img src="./static/img/storytelling.jpg" height="50" alt="Event Image"
-                                                class="max-w-100px">
-                                        </td>
-                                        <td>7419</td>
-                                        <td>2023-05-21 8:30:00</td>
-                                    </tr>
-                                    <!-- Digital Marketing -->
-                                    <tr>
-                                        <td>Digital Marketing</td>
-                                        <td><img src="./static/img/digitalmarketing.jpg" height="50"
-                                                alt="Event Image" class="max-w-100px">
-                                        </td>
-                                        <td>8886</td>
-                                        <td>2023-05-21 5:15:05</td>
-                                    </tr>
-                                    <!-- Language Learning -->
-                                    <tr>
-                                        <td>Language Learning</td>
-                                        <td><img src="./static/img/languagelearning.png" height="50"
-                                                alt="Event Image" class="max-w-100px">
-                                        </td>
-                                        <td>3338</td>
-                                        <td>2023-05-21 5:15:05</td>
-                                    </tr>
-                                    <!-- Graphic Design -->
-                                    <tr>
-                                        <td>Graphic Design</td>
-                                        <td><img src="./static/img/graphicdesign.jpg" height="50" alt="Event Image"
-                                                class="max-w-100px">
-                                        </td>
-                                        <td>4123</td>
-                                        <td>2023-05-21 5:15:05</td>
-                                    </tr>
-                                    <!-- Web Development -->
-                                    <tr>
-                                        <td>Web Development</td>
-                                        <td><img src="./static/img/webdevelopment.jpg" height="50" alt="Event Image"
-                                                class="max-w-100px">
-                                        </td>
-                                        <td>4591</td>
-                                        <td>2023-05-21 5:15:05</td>
-                                    </tr>
-                                    <!-- Cooking Techniques -->
-                                    <tr>
-                                        <td>Cooking Techniques</td>
-                                        <td><img src="./static/img/cookingtechniques.png" height="50"
-                                                alt="Event Image" class="max-w-100px">
-                                        </td>
-                                        <td>0365</td>
-                                        <td>2023-05-21 5:15:05</td>
-                                    </tr>
-                                    <!-- Financial Literacy -->
-                                    <tr>
-                                        <td>Financial Literacy</td>
-                                        <td><img src="./static/img/financialliteracy.png" height="50"
-                                                alt="Event Image" class="max-w-100px">
-                                        </td>
-                                        <td>6922</td>
-                                        <td>2023-05-21 5:15:05</td>
-                                    </tr>
-                                    <!-- Song Writing -->
-                                    <tr>
-                                        <td>Song Writing</td>
-                                        <td><img src="./static/img/songwriting.jpg" height="50" alt="Event Image"
-                                                class="max-w-100px">
-                                        </td>
-                                        <td>0175</td>
-                                        <td>2023-05-21 5:15:05</td>
-                                    </tr>
-                                    <!-- Strenght Training -->
-                                    <tr>
-                                        <td>Strenght Training</td>
-                                        <td><img src="./static/img/strengthtraining.jpg" height="50"
-                                                alt="Event Image" class="max-w-100px">
-                                        </td>
-                                        <td>8640</td>
-                                        <td>2023-05-21 5:15:05</td>
-                                    </tr>
+                                
+                                    <div class="card-group">
+                                        {% for event in events %}
+                                        <div class="card mx-3">
+                                           <img class="card-img-top"
+                                              src={{event.image}} alt="event picture">
+                                           <div class="card-body">
+                                              <h5 class="card-title">{{event.name}}</h5>
+                                              <p class="card-text">{{event.description}}</p>
+                                           </div>
+                                           <div class="card-footer"><a href = "{{url_for('event.show', id=event.id)}}" class ="btn btn-danger"> View Details </a></div>
+                                        </div>
+                                        {% endfor %}
                                 </tbody>
                             </table>
                         </div>

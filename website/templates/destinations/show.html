@@ -13,7 +13,7 @@
     <!-- more detailed -->
     <div class="centered-content my-5 py-4" id="search">
         <div class="col text-center text-white">
-            <h1>Photography</h1>
+            <h1>{{ event.name }}</h1>
             <div class="row mx-5 px-5 text-white justify-content-center mt-3">
                 <!-- desc -->
                 <div class="col py-3 mx-4 mt-3 mt-lg-0 bg-green rounded big-box">
@@ -43,7 +43,7 @@
                                 </div>
                             </div>
                             <!-- Buttons -->
-                            <div class="row mx-2">
+                            <div class="row text-left mx-2">
                                 {{ wtf.render_form(form2,"/destinations/book/{0}".format(event.id)) }}
                             </div>
                             <!-- Comments -->
