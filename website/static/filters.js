@@ -16,12 +16,7 @@ $('#dateFilter').change(function () {
         if (url.indexOf('?') > -1)
             url += '&date=' + selectedDate;
         else
-            url += '?date=' + selectedDate;
-    }
-
-    // if not exist /search? add it
-    if (url.indexOf('/search?') === -1) {
-        url = url.replace('/?', '/search?');
+            url += 'search?date=' + selectedDate;
     }
 
     // set new url
@@ -46,12 +41,7 @@ $('#typeFilter').change(function () {
         if (url.indexOf('?') > -1)
             url += '&type=' + selectedType;
         else
-            url += '?type=' + selectedType;
-    }
-
-    // if not exist /search? add it
-    if (url.indexOf('/search?') === -1) {
-        url = url.replace('/?', '/search?');
+            url += 'search?type=' + selectedType;
     }
 
     // set new url
@@ -76,12 +66,7 @@ $('#durationFilter').change(function () {
         if (url.indexOf('?') > -1)
             url += '&duration=' + selectedDuration;
         else
-            url += '?duration=' + selectedDuration;
-    }
-
-    // if not exist /search? add it
-    if (url.indexOf('/search?') === -1) {
-        url = url.replace('/?', '/search?');
+            url += 'search?duration=' + selectedDuration;
     }
 
     // set new url
@@ -109,12 +94,7 @@ $('#costFilter').on('keypress', function (e) {
             if (url.indexOf('?') > -1)
                 url += '&max_cost=' + selectedMaxCost;
             else
-                url += '?max_cost=' + selectedMaxCost;
-        }
-
-        // if not exist /search? add it
-        if (url.indexOf('/search?') === -1) {
-            url = url.replace('/?', '/search?');
+                url += 'search?max_cost=' + selectedMaxCost;
         }
 
         // set new url

@@ -43,11 +43,11 @@ def search():
         if date == 'today':
             query_conditions.append(Event.date >= datetime.now().date())
         elif date == 'this_week':
-            query_conditions.append(Event.date >= datetime.now() - datetime.timedelta(days=7))
+            query_conditions.append(Event.date >= datetime.now() -timedelta(days=7))
         elif date == 'this_month':
-            query_conditions.append(Event.date >= datetime.now() - datetime.timedelta(days=30))
+            query_conditions.append(Event.date >= datetime.now() - timedelta(days=30))
         elif date == 'this_year':
-            query_conditions.append(Event.date >= datetime.now() - datetime.timedelta(days=365))
+            query_conditions.append(Event.date >= datetime.now() - timedelta(days=365))
 
     # options: (All, Live, Recorded, Workshop, Lecture)
     if event_type in ['Live', 'Recorded', 'Workshop', 'Lecture']:
