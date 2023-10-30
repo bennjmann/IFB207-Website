@@ -110,37 +110,37 @@ $(document).ready(function () {
     url = url.replace("#search", "");
 
     // get date param
-    var dateParam = getParameterByName('date', url);
-    // if param exists select it
-    if (dateParam !== "") {
-        $("#dateFilter").val(dateParam);
+    var dateParam = url.split('date=')[1];
+    if (dateParam) {
+        var date = dateParam.split('&')[0];
+        $('#dateFilter').val(date);
     }
 
     // get type param
-    var typeParam = getParameterByName('type', url);
-    // if param exists select it
-    if (typeParam !== "") {
-        $("#typeFilter").val(typeParam);
+    var typeParam = url.split('type=')[1];
+    if (typeParam) {
+        var type = typeParam.split('&')[0];
+        $('#typeFilter').val(type);
     }
 
     // get duration param
-    var durationParam = getParameterByName('duration', url);
-    // if param exists select it
-    if (durationParam !== "") {
-        $("#durationFilter").val(durationParam);
+    var durationParam = url.split('duration=')[1];
+    if (durationParam) {
+        var duration = durationParam.split('&')[0];
+        $('#durationFilter').val(duration);
     }
 
     // get max_cost param
-    var maxCostParam = getParameterByName('max_cost', url);
-    // if param exists select it
-    if (maxCostParam !== "") {
-        $("#costFilter").val(maxCostParam);
+    var maxCostParam = url.split('max_cost=')[1];
+    if (maxCostParam) {
+        var maxCost = maxCostParam.split('&')[0];
+        $('#costFilter').val(maxCost);
     }
 
     // get search param
-    var searchParam = getParameterByName('search', url);
-    // if param exists select it
-    if (searchParam !== "") {
-        $("#SearchForm").val(searchParam);
+    var searchParam = url.split('search=')[1];
+    if (searchParam) {
+        var search = searchParam.split('&')[0];
+        $('#SearchForm').val(search);
     }
 });
