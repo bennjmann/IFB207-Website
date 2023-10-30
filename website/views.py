@@ -67,6 +67,6 @@ def search():
 
     if query_conditions:
         destinations = db.session.query(Event).filter(and_(*query_conditions)).all()
-        return render_template('index.html', destinations=destinations, search_query=search_query)
+        return render_template('index.html', destinations=destinations)
     else:
         return redirect(url_for('main.index'))

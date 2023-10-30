@@ -48,7 +48,7 @@ $('#typeFilter').change(function () {
     window.location.href = url + "#search";
 });
 
-// Duration
+// Duration 
 $('#durationFilter').change(function () {
     // Get current url
     var url = window.location.href;
