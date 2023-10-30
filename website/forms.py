@@ -32,15 +32,18 @@ class CommentForm(FlaskForm):
     submit = SubmitField('Create')
 
 # Create Event
-class EventForm(FlaskForm):
+class CreateEventForm(FlaskForm):
     name = StringField('Event Title', validators=[InputRequired()])
     status = SelectField('Status', choices=[("Open"), ("Closed")], validators=[InputRequired()])
     type = SelectField('Genres', choices=[("Live"), ("Recorded"), ("Workshop"), ("Lecture")], validators=[InputRequired()])
+    image = FileField('Event Image', validators=[FileRequired(message='Image Required'), FileAllowed(ALLOWED_FILE, message='Only supports PNG, JPG, png, jpg')])
+
+    description = TextAreaField('Description', validators=[InputRequired()])
+
     date = DateField('Date', format='%Y-%m-%d', validators=[InputRequired()])
     time = TimeField('Start Time', validators=[InputRequired()])
-    duration = StringField('Duration', validators=[InputRequired()])
-    description = TextAreaField('Description', validators=[InputRequired()])
-    image = FileField('Event Image', validators=[FileRequired(message='Image Required'), FileAllowed(ALLOWED_FILE, message='Only supports PNG, JPG, png, jpg')])
+    duration = IntegerField('Duration (mnts)', validators=[InputRequired()])
+
     ticket_cost = IntegerField('Cost Of Ticket', validators=[InputRequired()])
     total_tickets = IntegerField('Total Number Of Tickets', validators=[InputRequired()])
     

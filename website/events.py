@@ -1,13 +1,13 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from .models import Event, Comment
-from .forms import EventForm, CommentForm
+from .forms import CreateEventForm, CommentForm
 from . import db
 import os
 from werkzeug.utils import secure_filename
 from flask_login import login_required, current_user
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from .models import Comment, Event, Booking
-from .forms import CommentForm, EventForm, BookingForm
+from .forms import CommentForm, CreateEventForm, BookingForm
 from . import db, app
 import os
 from werkzeug.utils import secure_filename
@@ -36,29 +36,30 @@ def bookings():
 @destbp.route('/create-events', methods=['GET', 'POST'])
 @login_required
 def create():
-    eventForm = EventForm()
-    if eventForm.validate_on_submit():
-        db_file_path = check_upload_file(eventForm)
-        event = Event(name=eventForm.event_name.data,
-                      status=eventForm.status.data,
-                      type=eventForm.type.data,
+    form = CreateEventForm()
+    if form.validate_on_submit():
+        db_file_path = check_upload_file(form)
+        event = Event(name=form.name.data,
+                      status=form.status.data,
+                      type=form.type.data,
 
-                      date=eventForm.date.data,
-                      time=eventForm.time.data,
-                      duration=eventForm.duration.data,
+                      date=form.date.data,
+                      time=form.time.data,
+                      duration=form.duration.data,
 
-                      description=eventForm.description.data,
+                      description=form.description.data,
                       image=db_file_path,
 
-                      ticket_cost=eventForm.ticket_cost.data,
-                      total_tickets=eventForm.total_tickets.data,
+                      ticket_cost=form.ticket_cost.data,
+                      total_tickets=form.total_tickets.data,
 
                       user_id=current_user.id)
         db.session.add(event)
 
         db.session.commit()
-        return redirect(url_for('event.create-event'))
-    return render_template('destinations/create-event.html', form=eventForm)
+        flash('Event has been created', 'success')
+        return redirect(url_for('destination.show', id=event.id))
+    return render_template('destinations/create-event.html', form=form)
 
 @destbp.route('/events', methods=['GET', 'POST'])
 @login_required
@@ -88,20 +89,22 @@ def book(current_id):
             return redirect(url_for('destination.show', id=current_id))
     #return render_template('bookings.html', event=event, form=bookingForm, tickets=tickets)
 
-
 def check_upload_file(form):
     # get file data from form
     fp = form.image.data
     filename = fp.filename
-    # get the current path of the module file… store image file relative to this path
-    BASE_PATH = os.path.dirname(__file__)
-    # upload file location – directory of this file/static/image
-    upload_path = os.path.join(
-        BASE_PATH, 'static/image', secure_filename(filename))
-    # store relative path in DB as image location in HTML is relative
-    db_upload_path = '/static/image/event/' + secure_filename(filename)
-    # save the file and return the db upload path
+
+    # upload file
+    upload_dir = os.path.join(app.root_path, 'static', 'img', 'event')
+    
+    # create the upload directory if it doesn't exist
+    os.makedirs(upload_dir, exist_ok=True)
+
+    upload_path = os.path.join(upload_dir, filename)
     fp.save(upload_path)
+
+    # store relative path in DB
+    db_upload_path = '/static/img/event/' + secure_filename(filename)
     return db_upload_path
 
 @destbp.route('/<event>/comment', methods=['GET', 'POST'])
