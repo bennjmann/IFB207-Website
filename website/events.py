@@ -1,11 +1,4 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
-from .models import Event, Comment
-from .forms import CreateEventForm, CommentForm
-from . import db
-import os
-from werkzeug.utils import secure_filename
-from flask_login import login_required, current_user
-from flask import Blueprint, render_template, request, redirect, url_for, flash
 from .models import Comment, Event, Booking
 from .forms import CommentForm, CreateEventForm, BookingForm
 from . import db, app

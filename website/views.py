@@ -3,6 +3,7 @@ from flask import Blueprint, render_template, request, redirect, url_for
 from sqlalchemy import or_, and_
 from .models import Event, Booking
 from . import db
+from flask_login import current_user
 
 mainbp = Blueprint('main', __name__)
 
@@ -20,8 +21,8 @@ def selected(id):
 
 @mainbp.route('/bookings')
 def booking():
-    user_bookings = db.session.scalars(db.select(Booking).where()).all()
-    return render_template('bookings.html')
+    user_bookings = db.session.scalars(db.select(Event.name, Event.image, Booking.id.label("booking_id"), Booking.purchase_at).join(Booking).where(Booking.user_id==current_user.id))
+    return render_template('bookings.html', bookings=user_bookings)
     
 # example url http://domain.com/search?search=keyword&type=all&date=all&duration=60&max_cost=50.0#search
 @mainbp.route('/search')
