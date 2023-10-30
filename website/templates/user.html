@@ -3,8 +3,8 @@
 
 
 {% block head %}
-    <link rel="stylesheet" type="text/css" href="../static/style/global.css" />
-    <link rel="icon" href="../static/img/icon.png" />
+<link rel="stylesheet" type="text/css" href="../static/style/global.css" />
+<link rel="icon" href="../static/img/icon.png" />
 {% endblock %}
 
 
@@ -16,10 +16,6 @@
 <br>
 
 <div class="container-fluid">
-  <div class="page-header">
-    <h4 style="color:white;">{{heading}}</h4>
-  </div>
-
   <!-- flashes any messages to the user -->
   {% with messages = get_flashed_messages() %}
   {% if messages %} <!-- check if there are any messages -->
@@ -37,14 +33,15 @@
   {% endwith %}
 
   <!-- Form rendering is simple and easy if using bootstrap -->
-  <div class="col-md-6 ml-5">
+  <div class="col-md-6 ml-5 text-white">
+    <h2>{{heading}}</h2>
     {{wtf.render_form(form)}}
   </div>
   <br>
   <!-- When you have login form, then do show the user a link to register -->
   {% if heading|lower =='login' %}
-  <div class="col-md-4 mb-5 ml-5">
-    <p style="color:white;">New user? <a href="{{ url_for('auth.register') }}">Click here to REGISTER</a>.</p>
+  <div class="col-md-4 mb-5 ml-5 text-white">
+    <p>New user? <a href="{{ url_for('auth.register') }}">Click here to REGISTER</a>.</p>
   </div>
   {% endif %}
 </div>
