@@ -102,3 +102,45 @@ $('#costFilter').on('keypress', function (e) {
     }
 });
 
+// Once page renders, set the selected values
+$(document).ready(function () {
+    // get url
+    var url = window.location.href;
+    // remove #search from url
+    url = url.replace("#search", "");
+
+    // get date param
+    var dateParam = getParameterByName('date', url);
+    // if param exists select it
+    if (dateParam !== "") {
+        $("#dateFilter").val(dateParam);
+    }
+
+    // get type param
+    var typeParam = getParameterByName('type', url);
+    // if param exists select it
+    if (typeParam !== "") {
+        $("#typeFilter").val(typeParam);
+    }
+
+    // get duration param
+    var durationParam = getParameterByName('duration', url);
+    // if param exists select it
+    if (durationParam !== "") {
+        $("#durationFilter").val(durationParam);
+    }
+
+    // get max_cost param
+    var maxCostParam = getParameterByName('max_cost', url);
+    // if param exists select it
+    if (maxCostParam !== "") {
+        $("#costFilter").val(maxCostParam);
+    }
+
+    // get search param
+    var searchParam = getParameterByName('search', url);
+    // if param exists select it
+    if (searchParam !== "") {
+        $("#SearchForm").val(searchParam);
+    }
+});
