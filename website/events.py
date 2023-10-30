@@ -1,13 +1,13 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from .models import Event, Comment
-from .forms import EventForm, CommentForm
+from .forms import CreateEventForm, CommentForm
 from . import db
 import os
 from werkzeug.utils import secure_filename
 from flask_login import login_required, current_user
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from .models import Comment, Event, Booking
-from .forms import CommentForm, EventForm, BookingForm
+from .forms import CommentForm, CreateEventForm, BookingForm
 from . import db, app
 import os
 from werkzeug.utils import secure_filename
@@ -18,11 +18,12 @@ destbp = Blueprint('destination', __name__, url_prefix='/destinations')
 
 @destbp.route('/<id>')
 def show(id):
-    destination = db.session.scalar(
+    event = db.session.scalar(
         db.select(Event).where(Event.id == id))
     # create the comment form
     form = CommentForm()
-    return render_template('destinations/show.html', destination=destination, form=form)
+    form2 = BookingForm()
+    return render_template('destinations/show.html', event=event, form=form, form2=form2)
 
 @destbp.route('/user-bookings')
 @login_required
@@ -35,29 +36,30 @@ def bookings():
 @destbp.route('/create-events', methods=['GET', 'POST'])
 @login_required
 def create():
-    eventForm = EventForm()
-    if eventForm.validate_on_submit():
-        db_file_path = check_upload_file(eventForm)
-        event = Event(name=eventForm.event_name.data,
-                      status=eventForm.status.data,
-                      type=eventForm.type.data,
+    form = CreateEventForm()
+    if form.validate_on_submit():
+        db_file_path = check_upload_file(form)
+        event = Event(name=form.name.data,
+                      status=form.status.data,
+                      type=form.type.data,
 
-                      date=eventForm.date.data,
-                      time=eventForm.time.data,
-                      duration=eventForm.duration.data,
+                      date=form.date.data,
+                      time=form.time.data,
+                      duration=form.duration.data,
 
-                      description=eventForm.description.data,
+                      description=form.description.data,
                       image=db_file_path,
 
-                      ticket_cost=eventForm.ticket_cost.data,
-                      total_tickets=eventForm.total_tickets.data,
+                      ticket_cost=form.ticket_cost.data,
+                      total_tickets=form.total_tickets.data,
 
                       user_id=current_user.id)
         db.session.add(event)
 
         db.session.commit()
-        return redirect(url_for('event.create-event'))
-    return render_template('destinations/create-event.html', form=eventForm)
+        flash('Event has been created', 'success')
+        return redirect(url_for('destination.show', id=event.id))
+    return render_template('destinations/create-event.html', form=form)
 
 @destbp.route('/events', methods=['GET', 'POST'])
 @login_required
@@ -65,54 +67,59 @@ def events():
     events = Event.query.all()
     return render_template('destinations/events.html', event=events)
 
-@destbp.route('/book/<id>', methods=['GET', 'POST'])
+@destbp.route('/book/<current_id>', methods=['GET', 'POST'])
 @login_required
-def book(id):
-    event = Event.query.filter_by(event_id=id).first()
+def book(current_id):
+    event = Event.query.filter_by(id=current_id).first()
     tickets = Booking.query.count()
     bookingForm = BookingForm()
     if bookingForm.validate_on_submit():
         if int(bookingForm.quantity.data) > event.total_tickets:
             flash('Number of tickets exceeds available tickets', 'danger')
-            return redirect(url_for('event.book', id=event.event_id))
+            return redirect(url_for('event.book', id=event.id))
         else:
             booking = Booking(quantity=bookingForm.quantity.data,
                               user_id=current_user.id,
-                              event_id=event.event_id,
+                              event_id=event.id,
                               price=event.ticket_cost * int(bookingForm.quantity.data),
                               purchase_at=datetime.now())
             db.session.add(booking)
             db.session.commit()
             flash('Booking has been confirmed', 'success')
-            return redirect(url_for('event.bookings'))
-    return render_template('destinations/bookings.html', event=event, form=bookingForm, tickets=tickets)
+            return redirect(url_for('destination.show', id=current_id))
+    #return render_template('bookings.html', event=event, form=bookingForm, tickets=tickets)
 
 def check_upload_file(form):
     # get file data from form
     fp = form.image.data
     filename = fp.filename
-    # get the current path of the module file… store image file relative to this path
-    BASE_PATH = os.path.dirname(__file__)
-    # upload file location – directory of this file/static/image
-    upload_path = os.path.join(
-        BASE_PATH, 'static/image', secure_filename(filename))
-    # store relative path in DB as image location in HTML is relative
-    db_upload_path = '/static/image/event/' + secure_filename(filename)
-    # save the file and return the db upload path
+
+    # upload file
+    upload_dir = os.path.join(app.root_path, 'static', 'img', 'event')
+    
+    # create the upload directory if it doesn't exist
+    os.makedirs(upload_dir, exist_ok=True)
+
+    upload_path = os.path.join(upload_dir, filename)
     fp.save(upload_path)
+
+    # store relative path in DB
+    db_upload_path = '/static/img/event/' + secure_filename(filename)
     return db_upload_path
 
 @destbp.route('/<event>/comment', methods=['GET', 'POST'])
 @login_required
-def comment(destination):
+def comment(event):
     form = CommentForm()
     # get the destination object associated to the page and the comment
-    destination = db.session.scalar(db.select(Event).where(Event.id == destination))
+    event = db.session.scalar(db.select(Event).where(Event.id == event))
     if form.validate_on_submit():
         # read the comment from the form
-        comment = Comment(text=form.text.data, 
-                          destination=destination,
-                          user=current_user)
+        comment = Comment(
+            text=form.text.data,
+            user_id=current_user.id,
+            event_id=event.id,
+        )
         # here the back-referencing works - comment.destination is set
         # and the link is created
         db.session.add(comment)
@@ -122,4 +129,4 @@ def comment(destination):
         flash('Your comment has been added', 'success')
         # print('Your comment has been added', 'success')
     # using redirect sends a GET request to destination.show
-    return redirect(url_for('event.show', id=destination.id))
+    return redirect(url_for('destination.show', id=event.id))

@@ -1,5 +1,5 @@
 {% extends 'base.html' %}
-
+{% import "bootstrap4/form.html" as wtf %}
 <!doctype html>
 <html lang="en">
 <head>
@@ -13,7 +13,7 @@
     <!-- more detailed -->
     <div class="centered-content my-5 py-4" id="search">
         <div class="col text-center text-white">
-            <h1>Photography</h1>
+            <h1>{{ event.name }}</h1>
             <div class="row mx-5 px-5 text-white justify-content-center mt-3">
                 <!-- desc -->
                 <div class="col py-3 mx-4 mt-3 mt-lg-0 bg-green rounded big-box">
@@ -24,63 +24,44 @@
                                 <!-- Details -->
                                 <div class="col mx-2 text-left">
                                     <div class="card-body bg-dark rounded">
-                                        <h4>Course: Photography</h4>
-                                        <p><strong>Status:</strong> Open</p>
-                                        <p><strong>Duration:</strong> 60 minutes</p>
-                                        <p><strong>Type:</strong> Live</p>
-                                        <p><strong>Created:</strong> 17/08/2023</p>
-                                        <p><strong>Cost:</strong> Free</p>
+                                        <h4>Course: {{ event.name }}</h4>
+                                        <p><strong>Status:</strong> {{ event.status }} </p>
+                                        <p><strong>Duration:</strong> {{ event.duration }} </p>
+                                        <p><strong>Type:</strong> {{ event.type }} </p>
+                                        <p><strong>Created:</strong> {{ event.date }} </p>
+                                        <p><strong>Cost:</strong> {{ event.ticket_cost }} </p>
 
-                                        <p>With our thorough online course, you may embark on an exciting adventure into
-                                            the
-                                            world of photography. This course, designed for both beginners and experts,
-                                            will
-                                            teach you the art and science of generating spectacular visual narratives.
-                                            You'll learn the foundations of composition, lighting, and camera settings
-                                            from
-                                            seasoned photographers.</p>
-
-                                        <p><strong>Course Highlights:</strong></p>
-                                        <ul>
-                                            <li>Recognising camera types and settings</li>
-                                            <li>Investigating composition and framing methods</li>
-                                            <li>Understanding natural and artificial lighting</li>
-                                            <li>Navigating multiple photography genres</li>
-                                            <li>Post-processing and picture editing basics</li>
-                                            <li>Creating a personal photographic style</li>
-                                            <li>Practical exercises and peer reviews</li>
-                                            <li>Creating a compelling image portfolio</li>
-                                        </ul>
-
-                                        <p><strong>Time:</strong> Wednesday 1-3pm</p>
+                                        <p>
+                                            {{ event.description }}
+                                        </p>
+                                        <p><strong>Time:</strong> {{ event.time}}</p>
                                     </div>
                                 </div>
                                 <!-- Image -->
                                 <div class="mx-2 mt-3 mt-lg-0">
-                                    <img src="../../static/img/photography.jpeg" alt="Image" class="img-fluid">
+                                    <img src="{{ event.image }}" alt="Image" class="img-fluid">
                                 </div>
                             </div>
                             <!-- Buttons -->
-                            <div class="row mx-2">
-                                <button class="btn btn-dark mt-4 mr-2">Book Session</button>
-                                <button class="btn btn-dark mt-4">Comment</button>
+                            <div class="row text-left mx-2">
+                                {{ wtf.render_form(form2,"/destinations/book/{0}".format(event.id)) }}
                             </div>
                             <!-- Comments -->
                             <div class="col text-left mt-4">
                                 <div class="">
                                     <h2>Comments</h2>
-                                    {% for comment in destination.comments %}
+
+                                    <div class="my-4">
+                                        {{ wtf.render_form(form,"/destinations/{0}/comment".format(event.id)) }}
+                                    </div>
+
+                                    {% for comment in event.comments %}
                                     <div class="comment rounded">
                                         <i class="fa fa-user"></i>
                                         <strong>{{ comment.user.name }}:</strong>
-                                        {{ comment.text }}
+
                                         <div class="mt-2">
-                                            <button class="btn btn-success mr-2">
-                                                <i class="fa fa-thumbs-up"></i> Like
-                                            </button>
-                                            <button class="btn btn-danger">
-                                                <i class="fa fa-thumbs-down"></i> Dislike
-                                            </button>
+                                            {{ comment.text }}
                                         </div>
                                     </div>
                                     {% endfor %}

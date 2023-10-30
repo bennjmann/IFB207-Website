@@ -40,7 +40,7 @@
                         <div class="col mt-0 pt-3 mt-lg-3">
                             <label for="dateFilter">Date:</label>
                             <select id="dateFilter" class="form-control">
-                                <option value="hour">Last Hour</option>
+                                <option value="hour">All</option>
                                 <option value="today">Today</option>
                                 <option value="week">This Week</option>
                                 <option value="month">This Month</option>
@@ -70,12 +70,12 @@
                         </div>
                         <!-- Cost Filter -->
                         <div class="col mt-0 pt-3 mt-lg-33">
-                            <label for="costFilter">Cost:</label>
-                            <input type="range" id="costFilter" class="custom-range" min="0" max="100" step="1">
-                            <p>Value: $<span id="costValue">0</span></p>
+                            <label for="costFilter">Max Cost:</label>
+                            <input type="text" id="costFilter" class="form-control" placeholder="Enter cost">
                         </div>
                     </form>
                 </div>
+                
                 <!-- search -->
                 <div class="col py-3 mx-3 mt-3 mt-lg-0 bg-green rounded">
                     <div class="col text-center">
@@ -93,6 +93,8 @@
                     </div>
                 </div>
             </div>
+
+            
             <!-- details -->
         {% if  selected_destination %}
         <div class="col py-3 mx-4 mt-3 mt-lg-0 bg-green rounded big-box">
@@ -103,27 +105,15 @@
                         <div class="col mx-2 text-left">
                             <div class="card-body bg-dark rounded">
                                 <h4>Course: {{ selected_destination.name }}</h4>
-                                <p><strong>Status:</strong> Open</p>
-                                <p><strong>Duration:</strong> 60 minutes</p>
-                                <p><strong>Type:</strong> Live</p>
-                                <p><strong>Created:</strong> 17/08/2023</p>
-                                <p><strong>Cost:</strong> Free</p>
+                                <p><strong>Status:</strong> {{ selected_destination.status }}</p>
+                                <p><strong>Duration:</strong> {{ selected_destination.duration }}</p>
+                                <p><strong>Type:</strong> {{ selected_destination.type }}</p>
+                                <p><strong>Created:</strong> {{ selected_destination.date }}</p>
+                                <p><strong>Cost:</strong> {{ selected_destination.ticket_cost }}</p>
 
                                 <p>{{ selected_destination.description }}</p>
 
-                                <p><strong>Course Highlights:</strong></p>
-                                <ul>
-                                    <li>Recognising camera types and settings</li>
-                                    <li>Investigating composition and framing methods</li>
-                                    <li>Understanding natural and artificial lighting</li>
-                                    <li>Navigating multiple photography genres</li>
-                                    <li>Post-processing and picture editing basics</li>
-                                    <li>Creating a personal photographic style</li>
-                                    <li>Practical exercises and peer reviews</li>
-                                    <li>Creating a compelling image portfolio</li>
-                                </ul>
-
-                                <p><strong>Time:</strong> Wednesday 1-3pm</p>
+                                <p><strong>Time:</strong> {{ selected_destination.time}}</p>
                             </div>
                         </div>
                         <!-- Buttons -->

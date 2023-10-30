@@ -32,7 +32,7 @@ def register():
             # don't store the password in plaintext!
             pwd_hash = generate_password_hash(pwd)
             #create a new User model object
-            new_user = User(name=uname, password_hash=pwd_hash, emailid=email)
+            new_user = User(name=uname, password_hash=pwd_hash, email_id=email)
             db.session.add(new_user)
             db.session.commit()
             #commit to the database and redirect to HTML page
@@ -62,7 +62,7 @@ def login():
         if error is None:
             #all good, set the login_user of flask_login to manage the user
             login_user(user)
-            return redirect(url_for('main.index'))
+            return redirect(url_for('main.booking'))
         else:
             flash(error)
     return render_template('user.html', form=login_form, heading='Login')
