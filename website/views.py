@@ -36,7 +36,7 @@ def search():
     if search_query:
         query_conditions.append(or_(Event.name.like(f"%{search_query}%"), Event.description.like(f"%{search_query}%")))
     
-    # options: (All, Last Hour, Today, This Week, This Month, This Year)
+    # options: (today, this_week, this_month, this_year)
     if date:
         if date == 'today':
             query_conditions.append(Event.date >= datetime.now().date())
@@ -48,10 +48,10 @@ def search():
             query_conditions.append(Event.date >= datetime.now() - datetime.timedelta(days=365))
 
     # options: (All, Live, Recorded, Workshop, Lecture)
-    if event_type:
+    if event_type in ['Live', 'Recorded', 'Workshop', 'Lecture']:
         query_conditions.append(Event.type == event_type)
 
-    # options: (All, Under 20 minutes, 20 to 60 minutes, Over 1 hour)
+    # options: (under_20, 20_to_60, over_1_hour)
     if duration:
         if duration == 'under_20':
             query_conditions.append(Event.duration <= 20)
