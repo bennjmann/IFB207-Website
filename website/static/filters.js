@@ -19,6 +19,11 @@ $('#dateFilter').change(function () {
             url += '?date=' + selectedDate;
     }
 
+    // if not exist /search? add it
+    if (url.indexOf('/search?') === -1) {
+        url = url.replace('/?', '/search?');
+    }
+
     // set new url
     window.location.href = url + "#search";
 });
@@ -44,6 +49,11 @@ $('#typeFilter').change(function () {
             url += '?type=' + selectedType;
     }
 
+    // if not exist /search? add it
+    if (url.indexOf('/search?') === -1) {
+        url = url.replace('/?', '/search?');
+    }
+
     // set new url
     window.location.href = url + "#search";
 });
@@ -67,6 +77,11 @@ $('#durationFilter').change(function () {
             url += '&duration=' + selectedDuration;
         else
             url += '?duration=' + selectedDuration;
+    }
+
+    // if not exist /search? add it
+    if (url.indexOf('/search?') === -1) {
+        url = url.replace('/?', '/search?');
     }
 
     // set new url
@@ -95,6 +110,11 @@ $('#costFilter').on('keypress', function (e) {
                 url += '&max_cost=' + selectedMaxCost;
             else
                 url += '?max_cost=' + selectedMaxCost;
+        }
+
+        // if not exist /search? add it
+        if (url.indexOf('/search?') === -1) {
+            url = url.replace('/?', '/search?');
         }
 
         // set new url
