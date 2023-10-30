@@ -4,13 +4,6 @@
 <!doctype html>
 <html>
 
-{% block head %}
-    <link rel="stylesheet" type="text/css" href="../static/style/global.css" />
-    <link rel="icon" href="../static/img/icon.png" />
-{% endblock %}
-
-
-
 <body>
 {% block content %}
     <!-- landing page -->
@@ -70,15 +63,15 @@
                             <label for="durationFilter">Duration:</label>
                             <select id="durationFilter" class="form-control">
                                 <option value="all">All</option>
-                                <option value="20-mnts">Under 20 minutes</option>
-                                <option value="2-hours">20 to 60 minutes</option>
+                                <option value="20_mnts">Under 20 minutes</option>
+                                <option value="2_hours">20 to 60 minutes</option>
                                 <option value="1h">Over 1 hour</option>
                             </select>
                         </div>
                         <!-- Cost Filter -->
                         <div class="col mt-0 pt-3 mt-lg-33">
                             <label for="costFilter">Max Cost:</label>
-                            <input type="text" id="costFilter" class="form-control" placeholder="Enter cost">
+                            <input type="number" id="costFilter" class="form-control" placeholder="Enter cost">
                         </div>
                     </form>
                 </div>
