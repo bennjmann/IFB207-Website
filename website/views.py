@@ -1,7 +1,7 @@
 from datetime import datetime, timedelta
 from flask import Blueprint, render_template, request, redirect, url_for
 from sqlalchemy import or_, and_
-from .models import Event
+from .models import Event, Booking
 from . import db
 
 mainbp = Blueprint('main', __name__)
@@ -20,6 +20,7 @@ def selected(id):
 
 @mainbp.route('/bookings')
 def booking():
+    user_bookings = db.session.scalars(db.select(Booking).where()).all()
     return render_template('bookings.html')
     
 # example url http://domain.com/search?search=keyword&type=all&date=all&duration=60&max_cost=50.0#search
