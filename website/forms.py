@@ -18,14 +18,10 @@ class RegisterForm(FlaskForm):
     user_name = StringField("User Name", validators=[InputRequired()])
     email_id = StringField("Email Address", validators=[
                            Email("Please enter a valid email")])
-
     phone_number = IntegerField(
-        "Phone Number", validators=[ Length(10), Optional() ]
-    )
-
+        "Phone Number", validators=[ Length(10), Optional() ])
     address = TextAreaField(
-        "House Address", validators=[Optional(), Length(255)]
-    )
+        "House Address", validators=[Optional(), Length(min=10, max=255)])
 
     # linking two fields - password should be equal to data entered in confirm
     password = PasswordField("Password", validators=[InputRequired(),
