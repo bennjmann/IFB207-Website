@@ -1,6 +1,6 @@
 from flask import Blueprint, render_template, request, redirect, url_for, flash
 from .models import Comment, Event, Booking
-from .forms import CommentForm, CreateEventForm, BookingForm
+from .forms import CommentForm, CreateEventForm, BookingForm, CancelForm
 from . import db, app
 import os
 from werkzeug.utils import secure_filename
@@ -14,9 +14,10 @@ def show(id):
     event = db.session.scalar(
         db.select(Event).where(Event.id == id))
     # create the comment form
-    form = CommentForm()
-    form2 = BookingForm()
-    return render_template('destinations/show.html', event=event, form=form, form2=form2)
+    submit_comment_form = CommentForm()
+    buy_ticket_form = BookingForm()
+    cancel_form = CancelForm()
+    return render_template('destinations/show.html', event=event, submit_comment_form=submit_comment_form, buy_ticket_form=buy_ticket_form, cancel_form=cancel_form )
 
 @destbp.route('/user-bookings')
 @login_required
@@ -64,7 +65,6 @@ def events():
 @login_required
 def book(current_id):
     event = Event.query.filter_by(id=current_id).first()
-    tickets = Booking.query.count()
     bookingForm = BookingForm()
     if bookingForm.validate_on_submit():
         if int(bookingForm.quantity.data) > event.total_tickets:
@@ -123,3 +123,14 @@ def comment(event):
         # print('Your comment has been added', 'success')
     # using redirect sends a GET request to destination.show
     return redirect(url_for('destination.show', id=event.id))
+
+@destbp.route('/<event>/cancel', methods=['GET', 'POST'])
+@login_required
+def cancel(event):
+    form = CancelForm()
+    if form.validate_on_submit():
+        cancel_sql = Event.query.filter_by(id=event).first()
+        cancel_sql.status = 'Cancelled'
+        db.session.commit()
+        flash('Event Cancelled', 'success')
+    return redirect(url_for('main.index'))
