@@ -59,7 +59,7 @@ def create_app():
 @app.errorhandler(404)
 # inbuilt function which takes error as parameter
 def not_found(e):
-    return render_template("404.html", error=e)
+    return render_template("404.html"), 404
 
 @app.errorhandler(500)
 def internal_server_error(e):
