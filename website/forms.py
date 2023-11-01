@@ -24,7 +24,7 @@ class RegisterForm(FlaskForm):
     )
 
     address = TextAreaField(
-        "House Address", validators=[Optional()]
+        "House Address", validators=[Optional(), Length(255)]
     )
 
     # linking two fields - password should be equal to data entered in confirm
