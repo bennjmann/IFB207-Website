@@ -1,6 +1,6 @@
 from flask_wtf import FlaskForm
 from wtforms.fields import TextAreaField, SubmitField, StringField, PasswordField, DateField, TimeField, IntegerField, SelectField
-from wtforms.validators import InputRequired, Email, EqualTo, NumberRange
+from wtforms.validators import InputRequired, Email, EqualTo, NumberRange, Length, Optional
 from flask_wtf.file import FileRequired, FileField, FileAllowed
 
 ALLOWED_FILE = {'PNG', 'JPG', 'png', 'jpg'}
@@ -18,6 +18,14 @@ class RegisterForm(FlaskForm):
     user_name = StringField("User Name", validators=[InputRequired()])
     email_id = StringField("Email Address", validators=[
                            Email("Please enter a valid email")])
+
+    phone_number = IntegerField(
+        "Phone Number", validators=[ Length(10), Optional() ]
+    )
+
+    address = TextAreaField(
+        "House Address", validators=[Optional(), Length(255)]
+    )
 
     # linking two fields - password should be equal to data entered in confirm
     password = PasswordField("Password", validators=[InputRequired(),
