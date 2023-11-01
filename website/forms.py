@@ -34,7 +34,7 @@ class CommentForm(FlaskForm):
 # Create Event
 class CreateEventForm(FlaskForm):
     name = StringField('Event Title', validators=[InputRequired()])
-    status = SelectField('Status', choices=[("Open"), ("Closed")], validators=[InputRequired()])
+    status = SelectField('Status', choices=[("Open"), ("Inactive"),("Sold Out"), ("Cancelled")], validators=[InputRequired()])
     type = SelectField('Genres', choices=[("Live"), ("Recorded"), ("Workshop"), ("Lecture")], validators=[InputRequired()])
     image = FileField('Event Image', validators=[FileRequired(message='Image Required'), FileAllowed(ALLOWED_FILE, message='Only supports PNG, JPG, png, jpg')])
 

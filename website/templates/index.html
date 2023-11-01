@@ -99,7 +99,7 @@
         {% if  selected_destination %}
         <div class="col py-3 mx-4 mt-3 mt-lg-0 bg-green rounded big-box">
                 <div class="col text-center">
-                    <h2>Details</h2>
+                    <h2>Overview</h2>
                     <div class="col mt-0 pt-3 mt-lg-3">
                         <!-- Course Details -->
                         <div class="col mx-2 text-left">
@@ -118,7 +118,7 @@
                         </div>
                         <!-- Buttons -->
                         <div class="row mx-4">
-                            <button class="btn btn-dark mt-4"><a href="{{ url_for('destination.show', id=selected_destination.id) }}" class="text-decoration-none">More Info</a></button>
+                            <button class="btn btn-dark mt-4"><a href="{{ url_for('destination.show', id=selected_destination.id) }}" class="text-decoration-none">More Detailed Info</a></button>
                         </div>
                     </div>
                 </div>

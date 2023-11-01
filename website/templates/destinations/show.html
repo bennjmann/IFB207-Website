@@ -121,24 +121,40 @@
                                         </p>
                                         <p><strong>Time:</strong> {{ event.time}}</p>
                                     </div>
-                                </div>
-                                <!-- Image -->
+                                    <!-- Image -->
                                 <div class="mx-2 mt-3 mt-lg-0">
                                     <img src="{{ event.image }}" alt="Image" class="img-fluid">
                                 </div>
+                                </div>
+
                             </div>
                             <!-- Buttons -->
                             <div class="row text-left mx-2">
-                                {{ wtf.render_form(form2,"/destinations/book/{0}".format(event.id)) }}
+                                {% if not current_user.is_authenticated%}
+                                    <h2 class="my-4">
+                                        Login Or register to buy tickets
+                                    </h2>
+                                {% elif event.status != "Open" %}
+                                    <h2 class="my-4">
+                                        Tickets are no longer Available
+                                    </h2>
+                                {% else %}
+                                    {{ wtf.render_form(form2,"/destinations/book/{0}".format(event.id)) }}
+                                {% endif %}
                             </div>
                             <!-- Comments -->
                             <div class="col text-left mt-4">
                                 <div class="">
                                     <h2>Comments</h2>
-
-                                    <div class="my-4">
+                                {% if current_user.is_authenticated %}
+                                <div class="my-4">
                                         {{ wtf.render_form(form,"/destinations/{0}/comment".format(event.id)) }}
                                     </div>
+                                {% else %}
+                                        <h2 class="my-4">
+                                            Login Or register to post comments
+                                        </h2>
+                                {% endif %}
 
                                     {% for comment in event.comments %}
                                     <div class="comment rounded">
