@@ -8,7 +8,9 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String(100), index=True, unique=True, nullable=False)
     email_id = db.Column(db.String(100), index=True, nullable=False)
 
+    phone_number = db.Column(db.Integer, nullable=False)
     password_hash = db.Column(db.String(255), nullable=False)
+    address = db.Column(db.String(255), nullable=False)
 
     comments = db.relationship('Comment', backref='user')
     event = db.relationship('Event', backref='user')
