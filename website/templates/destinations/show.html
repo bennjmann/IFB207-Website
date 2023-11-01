@@ -139,7 +139,12 @@
                                         Tickets are no longer Available
                                     </h2>
                                 {% else %}
-                                    {{ wtf.render_form(form2,"/destinations/book/{0}".format(event.id)) }}
+                                    {{ wtf.render_form(buy_ticket_form,"/destinations/book/{0}".format(event.id)) }}
+                                {% endif %}
+                                {% if event.user_id == current_user.id and event.status == 'Open'  %}
+                                    <div>
+                                        {{ wtf.render_form(cancel_form,"/destinations/{0}/cancel".format(event.id)) }}
+                                    </div>
                                 {% endif %}
                             </div>
                             <!-- Comments -->
@@ -148,7 +153,7 @@
                                     <h2>Comments</h2>
                                 {% if current_user.is_authenticated %}
                                 <div class="my-4">
-                                        {{ wtf.render_form(form,"/destinations/{0}/comment".format(event.id)) }}
+                                        {{ wtf.render_form(submit_comment_form,"/destinations/{0}/comment".format(event.id)) }}
                                     </div>
                                 {% else %}
                                         <h2 class="my-4">

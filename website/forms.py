@@ -18,10 +18,14 @@ class RegisterForm(FlaskForm):
     user_name = StringField("User Name", validators=[InputRequired()])
     email_id = StringField("Email Address", validators=[
                            Email("Please enter a valid email")])
+
     phone_number = IntegerField(
-        "Phone Number", validators=[ Length(10), Optional() ])
+        "Phone Number", validators=[ NumberRange(max=10), InputRequired()  ]
+    )
+
     address = TextAreaField(
-        "House Address", validators=[Optional(), Length(min=10, max=255)])
+        "House Address", validators=[Length(1, 255), InputRequired()]
+    )
 
     # linking two fields - password should be equal to data entered in confirm
     password = PasswordField("Password", validators=[InputRequired(),
@@ -57,3 +61,6 @@ class CreateEventForm(FlaskForm):
 class BookingForm(FlaskForm):
     quantity = IntegerField('Number Of Tickets', validators=[InputRequired(), NumberRange(min=1)])
     submit = SubmitField('Book')
+
+class CancelForm(FlaskForm):
+    submit = SubmitField('Cancel')
