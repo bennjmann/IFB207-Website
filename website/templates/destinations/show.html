@@ -110,7 +110,7 @@
                             <!-- Course Details -->
                             <div class="row">
                                 <!-- Details -->
-                                <div class="mx-2 grid grid-cols-2 gap-4">
+                                <div class="details-grid mx-2">
                                     <div class="card-body bg-dark rounded text-left">
                                         <h4>Course: {{ event.name }}</h4>
                                         <p><strong>Status:</strong> {{ event.status }} </p>
@@ -123,57 +123,50 @@
                                         <p><strong>Description:</strong><br>{{ event.description }}</p>
                                     </div>
                                     <!-- Image -->
-                                    <div class="mx-2 mt-3 mt-lg-0">
-                                        <img src="{{ event.image }}" alt="Image" class="" width="80%">
+                                    <div class="card-body bg-dark rounded">
+                                        <img src="{{ event.image }}" alt="Image" style="width: 100%;">
                                     </div>
                                 </div>
 
                             </div>
-                            <!-- Buttons -->
-                            <h3>Number of tickets left: {{ event.total_tickets }}</h3>
-                            <div class="row text-left mx-2">
+                            
+                            <!-- Tickets -->
+                            <div class="col text-left my-4">
+                                <div>
+                                    <h5>Remaining Tickets: {{ event.total_tickets }}</h5>
+                                </div>
+
                                 {% if not current_user.is_authenticated%}
-                                <h2 class="my-4">
-                                    Login Or register to buy tickets
-                                </h2>
-                                {% elif event.status != "Open" or event.total_tickets <= 0 %} <h2 class="my-4">
-                                    Tickets are no longer Available
-                                    </h2>
-                                    {% else %}
-                                    <div class="my-4">
-                                        {{ wtf.render_form(buy_ticket_form,"/destinations/book/{0}".format(event.id)) }}
-                                    </div>
-                                    {% endif %}
-                                    {% if event.user_id == current_user.id and event.status == 'Open' %}
-                                    <div class="m-4">
-                                        {{ wtf.render_form(cancel_form,"/destinations/{0}/cancel".format(event.id)) }}
-                                    </div>
-                                    {% endif %}
+                                <h5 class="mt-2 text-red">Login Or register to purchase tickets</h5>
+                                {% elif event.status != "Open" or event.total_tickets <= 0 %} 
+                                <h5 class="mt-2 text-red">No Tickets longer Available</h5>
+                                {% else %}
+                                <!-- Book number of tickets -->
+                                <div class="mt-2 max-w-14">
+                                    {{ wtf.render_form(buy_ticket_form,"/destinations/book/{0}".format(event.id)) }}
+                                </div>
+                                {% endif %}
+
+                                {% if event.user_id == current_user.id and event.status == 'Open' %}
+                                <div class="m-4">{{ wtf.render_form(cancel_form,"/destinations/{0}/cancel".format(event.id)) }}</div>
+                                {% endif %}
                             </div>
+
                             <!-- Comments -->
                             <div class="col text-left mt-4">
                                 <div class="">
-                                    <h2>Comments</h2>
+                                    <h2>Comments:</h2>
                                     {% if current_user.is_authenticated %}
-                                    <div class="my-4">
-                                        {{
-                                        wtf.render_form(submit_comment_form,"/destinations/{0}/comment".format(event.id))
-                                        }}
-                                    </div>
+                                    <div class="my-4">{{wtf.render_form(submit_comment_form,"/destinations/{0}/comment".format(event.id))}}</div>
                                     {% else %}
-                                    <h2 class="my-4">
-                                        Login Or register to post comments
-                                    </h2>
+                                    <h5 class="my-2 text-red">Login Or register to post comments</h5>
                                     {% endif %}
 
                                     {% for comment in event.comments %}
                                     <div class="comment rounded">
                                         <i class="fa fa-user"></i>
                                         <strong>{{ comment.user.name }}:</strong>
-
-                                        <div class="mt-2">
-                                            {{ comment.text }}
-                                        </div>
+                                        <div class="mt-2">{{ comment.text }}</div>
                                     </div>
                                     {% endfor %}
                                 </div>
