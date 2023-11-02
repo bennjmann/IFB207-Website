@@ -19,6 +19,23 @@ body {
     /* Use 100vw to cover the full viewport width */
 }
 
+.alert-possition {
+    position: absolute;
+    top: 10vh;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.close-btn {
+    cursor: pointer;
+    display: inline-block;
+}
+
+.close-btn:hover {
+    color: #ff0000;
+}
+
+
 .create-class-form {
     padding: 20px;
     background-color: #f5f5f5;
@@ -32,7 +49,7 @@ body {
 }
 
 .create-class-form form div:nth-child(6) {
-    grid-column: span 4 / span 4; 
+    grid-column: span 4 / span 4;
 }
 
 .grid {
@@ -47,16 +64,40 @@ body {
     gap: 1rem;
 }
 
-.w-15 {
-    min-width: 15rem;
-}
-
 .w-10 {
     min-width: 10rem;
 }
 
+.w-15 {
+    min-width: 15rem;
+}
+
+.w-20 {
+    min-width: 20rem;
+}
+
+.w-25 {
+    min-width: 25rem;
+}
+
+.w-30 {
+    min-width: 30rem;
+}
+
 .max-w-12 {
     max-width: 12rem;
+}
+
+.min-w-min {
+    min-width: min-content;
+}
+
+.min-w-fit {
+    min-width: fit-content;
+}
+
+.min-w-max {
+    min-width: max-content;
 }
 
 .big-box {

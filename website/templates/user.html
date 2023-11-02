@@ -7,42 +7,49 @@
 <link rel="icon" href="../static/img/icon.png" />
 {% endblock %}
 
-
 {% block content %}
 
-<br>
-<br>
-<br>
-<br>
-
-<div class="container-fluid">
-  <!-- flashes any messages to the user -->
-  {% with messages = get_flashed_messages() %}
-  {% if messages %} <!-- check if there are any messages -->
-  <div class="container-fluid;">
-    <div class="row mt-3 mb-3">
-      <div class="col-md-12">
-        {% for message in messages %} <!--loop through the messages-->
-        <div class="alert alert-info">{{ message }}</div> <!--display as alert-->
-        {% endfor %}
+<!-- flashes any messages to the user -->
+{% with messages = get_flashed_messages() %}
+{% if messages %} <!-- check if there are any messages -->
+<div class="alert-possition text-center justify-content-center">
+  <div class="row">
+    <div class="col">
+      {% for message in messages %} <!--loop through the messages-->
+      <div class="alert alert-info" id="myAlert"> <!--display as alert-->
+        {{ message }}
+        <h5 class="close-btn" onclick="closeAlert()">×</h5>
       </div>
+      {% endfor %}
     </div>
   </div>
-
-  {% endif %}
-  {% endwith %}
-
-  <!-- Form rendering is simple and easy if using bootstrap -->
-  <div class="col-md-6 ml-5 text-white">
-    <h2>{{heading}}</h2>
-    {{wtf.render_form(form)}}
-  </div>
-  <br>
-  <!-- When you have login form, then do show the user a link to register -->
-  {% if heading|lower =='login' %}
-  <div class="col-md-4 mb-5 ml-5 text-white">
-    <p>New user? <a href="{{ url_for('auth.register') }}">Click here to REGISTER</a>.</p>
-  </div>
-  {% endif %}
 </div>
+{% endif %}
+{% endwith %}
+
+<div class="container centered-content">
+  <div class="row p-5 bg-green rounded text-center justify-content-center">
+    <!-- Display login/Register form -->
+    <div class="text-white">
+      <h2>{{heading}}</h2>
+      {{wtf.render_form(form)}}
+
+      <!-- If login page -->
+      {% if heading|lower =='login' %}
+      <p class="text-white mt-2">New user? <a href="{{ url_for('auth.register') }}">Click here to REGISTER</a>.</p>
+      {% endif %}
+
+      <!-- If register page -->
+      {% if heading|lower =='register' %}
+      <p class="text-white mt-2">Already have an account? <a href="{{ url_for('auth.login') }}">Click here to LOGIN</a>.</p>
+      {% endif %}
+    </div>
+  </div>
+</div>
+
+<script>
+  function closeAlert() {
+    document.getElementById("myAlert").style.display = "none";
+  }
+</script>
 {% endblock %}
