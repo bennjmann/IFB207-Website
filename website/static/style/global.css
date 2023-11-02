@@ -99,6 +99,11 @@ body {
     color: #ff0000;
 }
 
+.py-10 {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
 .w-10 {
     min-width: 10rem;
 }
