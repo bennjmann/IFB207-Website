@@ -4,50 +4,48 @@
 <html>
 
 {% block head %}
-    <link rel="stylesheet" type="text/css" href="../static/style/global.css" />
-    <link rel="icon" href="../static/img/icon.png" />
+<link rel="stylesheet" type="text/css" href="../static/style/global.css" />
+<link rel="icon" href="../static/img/icon.png" />
 {% endblock %}
 
 <body>
-
-
-{% block content %}
-        <!-- profile -->
+    {% block content %}
+    <!-- profile -->
     <div class="my-5 centered-content">
-                <!-- booking -->
-                <div class="bg-green rounded mt-3">
-                    <div class="p-5 border-2 border-dark">
-                        <div class="table-responsive text-white table-scroll">
-                            <table class="table table-bordered text-white">
-                                <thead>
-                                    <tr>
-                                        <th>Class Name</th>
-                                        <th>Class Image</th>
-                                        <th>Booking ID</th>
-                                        <th>Time and Date Booked</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                {% for event in bookings %}
-                                <tr>
+        <!-- booking -->
+        <div class="bg-green rounded mt-3">
+            <div class="p-5 border-2 border-dark">
+                <div class="table-responsive text-white table-scroll">
+                    <table class="table table-bordered text-white">
+                        <thead>
+                            <tr>
+                                <th>Class Name</th>
+                                <th>Class Image</th>
+                                <th>Booking ID</th>
+                                <th>Time and Date Booked</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for event in bookings %}
+                            <tr>
                                 <td>{{event.name}}</td>
                                 <td>
-                                    <img class="img-thumbnail" src='{{event.image}}' alt="event picture" >
+                                    <img class="img-thumbnail" src='{{event.image}}' alt="event picture">
                                 </td>
                                 <td>{{event.booking_id}}</td>
                                 <td>{{event.purchase_at}}</td>
-                                </tr>
-                                {% endfor %}
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
     </div>
-{% endblock %}
+    </div>
+    </div>
+    {% endblock %}
 
 </body>
 

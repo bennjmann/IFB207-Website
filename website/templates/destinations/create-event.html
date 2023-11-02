@@ -60,11 +60,11 @@
                             <i class="fa fa-search"></i> Find Class
                         </a>
                         <div class="dropdown-menu shadow-sm" aria-labelledby="dropdown01">
-                            <a class="dropdown-item" href="{{ url_for('main.search', search="all", _anchor='search') }}">All</a>
-                            <a class="dropdown-item" href="{{ url_for('main.search', search="recorded", _anchor='search') }}">Recorded</a>
-                            <a class="dropdown-item" href="{{ url_for('main.search', search="video", _anchor='search') }}">Video</a>
-                            <a class="dropdown-item" href="{{ url_for('main.search', search="workshop", _anchor='search') }}">Workshop</a>
-                            <a class="dropdown-item" href="{{ url_for('main.search', search="lecture", _anchor='search') }}">Lecture</a>
+                            <a class="dropdown-item" href="/search?type=All#search">All</a>
+                            <a class="dropdown-item" href="/search?type=Recorded#search">Recorded</a>
+                            <a class="dropdown-item" href="/search?type=Video#search">Video</a>
+                            <a class="dropdown-item" href="/search?type=Workshop#search">Workshop</a>
+                            <a class="dropdown-item" href="/search?type=Lecture#search">Lecture</a>
                         </div>
                     </li>
                     <li class="nav-item dropdown">
