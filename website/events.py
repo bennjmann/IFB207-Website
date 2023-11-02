@@ -79,8 +79,7 @@ def book(current_id):
             db.session.add(booking)
             db.session.commit()
             flash('Booking has been confirmed', 'success')
-            return redirect(url_for('destination.show', id=current_id))
-    #return render_template('bookings.html', event=event, form=bookingForm, tickets=tickets)
+            return redirect(url_for('main.booking', id=current_id))
 
 def check_upload_file(form):
     # get file data from form
