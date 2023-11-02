@@ -10,34 +10,39 @@
 
 <body>
     {% block content %}
-    <!-- profile -->
     <div class="py-5 centered-content">
-        <!-- booking -->
-        <div class="bg-green rounded mt-3">
-            <div class="p-5 border-2 border-dark">
-                <div class="table-responsive text-white table-scroll">
-                    <table class="table table-bordered text-white">
-                        <thead>
-                            <tr>
-                                <th>Class Name</th>
-                                <th>Class Image</th>
-                                <th>Booking ID</th>
-                                <th>Time and Date Booked</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for booking in bookings %}
-                            <tr>
-                                <td><h1>{{booking.name}}</h1></td>
-                                <td>
-                                    <img class="img-fluid"  src='{{booking.image}}' alt="event picture">
-                                </td>
-                                <td><h2>{{booking.id}}</h2></td>
-                                <td><h2>{{booking.purchase_at}}</h2></td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+        <div class="text-center text-white">
+            <br><br><br>
+            <h1>Create a New Class</h1>
+            <div class="bg-green rounded mt-3">
+                <div class="p-5 border-2 border-dark">
+                    <div class="table-responsive text-white table-scroll">
+                        <table class="table table-bordered text-white">
+                            <thead>
+                                <tr>
+                                    <th>Class Name</th>
+                                    <th>Class Image</th>
+                                    <th>Booking ID</th>
+                                    <th>Time and Date Booked</th>
+                                    <th>Price</th>
+                                    <th>Quantity</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for booking in bookings %}
+                                <tr>
+                                    <td>{{booking.name}}</td>
+                                    <td><img src='{{booking.image}}' alt="event picture" width="150rem"
+                                            style="max-height: 84rem;"></td>
+                                    <td>{{booking.id}}</td>
+                                    <td>{{booking.purchase_at}}</td>
+                                    <td>{{booking.price}}</td>
+                                    <td>{{booking.quantity}}</td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
