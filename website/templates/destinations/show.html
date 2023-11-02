@@ -139,10 +139,12 @@
                                         Tickets are no longer Available
                                     </h2>
                                 {% else %}
+                                    <div class="my-4">
                                     {{ wtf.render_form(buy_ticket_form,"/destinations/book/{0}".format(event.id)) }}
+                                    </div>
                                 {% endif %}
                                 {% if event.user_id == current_user.id and event.status == 'Open'  %}
-                                    <div>
+                                    <div class="m-4">
                                         {{ wtf.render_form(cancel_form,"/destinations/{0}/cancel".format(event.id)) }}
                                     </div>
                                 {% endif %}
