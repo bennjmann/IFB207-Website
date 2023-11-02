@@ -21,7 +21,7 @@ def selected(id):
 
 @mainbp.route('/bookings')
 def booking():
-    user_bookings = db.session.scalars(db.select(Event.name, Event.image, Booking.id.label("booking_id"), Booking.purchase_at).join(Booking).where(Booking.user_id==current_user.id))
+    user_bookings = db.session.query(Booking.id, Booking.purchase_at, Event.name, Event.image).join(Event).where(Booking.user_id == current_user.id)
     return render_template('bookings.html', bookings=user_bookings)
     
 # example url http://domain.com/search?search=keyword&type=all&date=all&duration=60&max_cost=50.0#search

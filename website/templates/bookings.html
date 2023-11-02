@@ -26,14 +26,14 @@
                             </tr>
                         </thead>
                         <tbody>
-                            {% for event in bookings %}
+                            {% for booking in bookings %}
                             <tr>
-                                <td>{{event.name}}</td>
+                                <td><h1>{{booking.name}}</h1></td>
                                 <td>
-                                    <img class="img-thumbnail" src='{{event.image}}' alt="event picture">
+                                    <img class="img-fluid"  src='{{booking.image}}' alt="event picture">
                                 </td>
-                                <td>{{event.booking_id}}</td>
-                                <td>{{event.purchase_at}}</td>
+                                <td><h2>{{booking.id}}</h2></td>
+                                <td><h2>{{booking.purchase_at}}</h2></td>
                             </tr>
                             {% endfor %}
                         </tbody>
