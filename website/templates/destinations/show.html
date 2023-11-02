@@ -129,12 +129,13 @@
 
                             </div>
                             <!-- Buttons -->
+                        <h3>Number of tickets left: {{ event.total_tickets }}</h3>
                             <div class="row text-left mx-2">
                                 {% if not current_user.is_authenticated%}
                                     <h2 class="my-4">
                                         Login Or register to buy tickets
                                     </h2>
-                                {% elif event.status != "Open" %}
+                                {% elif event.status != "Open" or event.total_tickets <= 0 %}
                                     <h2 class="my-4">
                                         Tickets are no longer Available
                                     </h2>
