@@ -5,7 +5,7 @@
 <html>
 
 <body>
-{% block content %}
+    {% block content %}
     <!-- landing page -->
     <div class="container centered-content py-5">
         <div class="row mt-5 mt-lg-0">
@@ -75,58 +75,58 @@
                         </div>
                     </form>
                 </div>
-                
+
                 <!-- search -->
                 <div class="col py-3 mx-3 mt-3 mt-lg-0 bg-green rounded">
                     <div class="col text-center">
                         <h2>Search</h2>
-                        {% if destinations|length <= 0 %}
-                            No class Found
-                        {% endif %}
-
-
-                        {% for destination in destinations %}
-                        	<div class="col mt-0 pt-3 mt-lg-3">
-                            <a href="{{ url_for('main.selected', id=destination.id, _anchor='search') }}" class="btn btn-dark w-15 active">{{ destination.name }}</a>
-                        </div>
-                        {% endfor %}
+                        {% if destinations|length <= 0 %} No class Found {% endif %} {% for destination in destinations
+                            %} <div class="col mt-0 pt-3 mt-lg-3">
+                            <a href="{{ url_for('main.selected', id=destination.id, _anchor='search') }}"
+                                class="btn btn-dark w-15 active">{{ destination.name }}</a>
                     </div>
-                </div>
-            </div>
-
-            
-            <!-- details -->
-        {% if  selected_destination %}
-        <div class="col py-3 mx-4 mt-3 mt-lg-0 bg-green rounded big-box">
-                <div class="col text-center">
-                    <h2>Overview</h2>
-                    <div class="col mt-0 pt-3 mt-lg-3">
-                        <!-- Course Details -->
-                        <div class="col mx-2 text-left">
-                            <div class="card-body bg-dark rounded">
-                                <h4>Course: {{ selected_destination.name }}</h4>
-                                <p><strong>Status:</strong> {{ selected_destination.status }}</p>
-                                <p><strong>Duration:</strong> {{ selected_destination.duration }}</p>
-                                <p><strong>Type:</strong> {{ selected_destination.type }}</p>
-                                <p><strong>Created:</strong> {{ selected_destination.date }}</p>
-                                <p><strong>Cost:</strong> {{ selected_destination.ticket_cost }}</p>
-
-                                <p>{{ selected_destination.description }}</p>
-
-                                <p><strong>Time:</strong> {{ selected_destination.time}}</p>
-                            </div>
-                        </div>
-                        <!-- Buttons -->
-                        <div class="row mx-4">
-                            <button class="btn btn-dark mt-4"><a href="{{ url_for('destination.show', id=selected_destination.id) }}" class="text-decoration-none">More Detailed Info</a></button>
-                        </div>
-                    </div>
+                    {% endfor %}
                 </div>
             </div>
         </div>
-    {% endif %}
+
+
+        <!-- details -->
+        
+        <div class="col py-3 mx-4 mt-3 mt-lg-0 bg-green rounded big-box">
+            <div class="col text-center">
+                <h2>Overview</h2>
+                {% if selected_destination %}
+                <div class="col mt-0 pt-3 mt-lg-3">
+                    <!-- Course Details -->
+                    <div class="col mx-2 text-left">
+                        <div class="card-body bg-dark rounded">
+                            <h4>Course: {{ selected_destination.name }}</h4>
+                            <p><strong>Status:</strong> {{ selected_destination.status }}</p>
+                            <p><strong>Duration:</strong> {{ selected_destination.duration }}</p>
+                            <p><strong>Type:</strong> {{ selected_destination.type }}</p>
+                            <p><strong>Created:</strong> {{ selected_destination.date }}</p>
+                            <p><strong>Cost:</strong> {{ selected_destination.ticket_cost }}</p>
+
+                            <p>{{ selected_destination.description }}</p>
+
+                            <p><strong>Time:</strong> {{ selected_destination.time}}</p>
+                        </div>
+                    </div>
+                    <!-- Buttons -->
+                    <div class="row mx-4">
+                        <button class="btn btn-dark mt-4"><a
+                                href="{{ url_for('destination.show', id=selected_destination.id) }}"
+                                class="text-decoration-none">More Detailed Info</a></button>
+                    </div>
+                </div>
+                {% endif %}
+            </div>
+        </div>
     </div>
-{% endblock %}
+    
+    </div>
+    {% endblock %}
 </body>
 
 </html>

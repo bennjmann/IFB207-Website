@@ -86,9 +86,9 @@ class CreateEventForm(FlaskForm):
 
     date = DateField("Date", format="%Y-%m-%d", validators=[InputRequired()])
     time = TimeField("Start Time", validators=[InputRequired()])
-    duration = IntegerField("Duration (mnts)", validators=[InputRequired()])
+    duration = IntegerField("Duration", validators=[InputRequired()], render_kw={"placeholder": "Minutes "})
 
-    ticket_cost = IntegerField("Cost Of Ticket", validators=[InputRequired()])
+    ticket_cost = IntegerField("Cost Of Ticket", validators=[InputRequired()], render_kw={"placeholder": "Dollars"})
     total_tickets = IntegerField(
         "Total Number Of Tickets", validators=[InputRequired()]
     )
