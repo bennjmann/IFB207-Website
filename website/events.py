@@ -69,7 +69,7 @@ def book(current_id):
     if bookingForm.validate_on_submit():
         if int(bookingForm.quantity.data) > event.total_tickets:
             flash('Number of tickets exceeds available tickets', 'danger')
-            return redirect(url_for('event.book', id=event.id))
+            return redirect(url_for('destination.show', id=event.id))
         else:
             booking = Booking(quantity=bookingForm.quantity.data,
                               user_id=current_user.id,
@@ -77,10 +77,11 @@ def book(current_id):
                               price=event.ticket_cost * int(bookingForm.quantity.data),
                               purchase_at=datetime.now())
             db.session.add(booking)
+            tickets_amount = Event.query.filter_by(id=event.id).first()
+            tickets_amount.total_tickets = tickets_amount.total_tickets - int(bookingForm.quantity.data)
             db.session.commit()
             flash('Booking has been confirmed', 'success')
-            return redirect(url_for('destination.show', id=current_id))
-    #return render_template('bookings.html', event=event, form=bookingForm, tickets=tickets)
+            return redirect(url_for('main.booking', id=current_id))
 
 def check_upload_file(form):
     # get file data from form
